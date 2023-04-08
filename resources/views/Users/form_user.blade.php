@@ -10,11 +10,33 @@
 
             @php
                 use App\Models\User;
+                use App\Models\Property;
+
                 $user=User::first();
+                $property=Property::first();
 
-                // print_r($user->favs[0]->properties);
 
-                // dd($user->favs[0]->properties->toArray());
+                //Ver las propiedades(en este caso solo la primera) que tiene el usuario en favorito
+                // dump($user->favs[0]->properties->toArray());
+
+                //Ver el alquiler que tiene el usuario
+                // dd($user->rental->property->toArray());
+
+                //Ver todos los usuarios que hya dentro de una propiedad
+                // foreach ($property->rentals as $rental) {
+                //     dump($rental->user->toArray());
+                // }
+                
+                //Ver todas las facturas de una propiedad
+                dump($property->rentals[0]->bills->toArray());
+
+                //Ver todas las incidencias de una propiedad
+                // dump($property->rentals[0]->incidences->toArray());
+                // die();
+
+                //Ver todas las fotos de un piso
+                // dump($property->images->toArray());
+
             @endphp
 
             @if($errors->any())

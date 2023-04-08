@@ -9,6 +9,7 @@ use App\Models\Rental;
 use App\Models\Image;
 use App\Models\Room;
 use App\Models\Fav;
+use App\Models\Bill;
 
 class Property extends Model
 {
@@ -18,23 +19,19 @@ class Property extends Model
         return $this->hasMany(Fav::class);
     }
 
-    public function users(){
-        return $this->hasManyThrough(User::class,Rental::class);
+    public function rentals(){
+        return $this->hasMany(Rental::class);
     }
 
     public function bills(){
-        return $this->hasManyThrough(Bill::class,Rental::class);
-    }
-
-    public function incidences(){
-        return $this->hasManyThrough(Incidence::class,Rental::class);
+        return $this->hasMany(Bill::class);
     }
 
     public function images(){
         return $this->hasMany(Image::class);
     }
 
-    public function rooms(){
-        return $this->hasMany(Room::class);
+    public function incidences(){
+        return $this->hasMany(Incidence::class);
     }
 }

@@ -10,7 +10,7 @@ class UsersController extends Controller
     //Request para saber que tipo de dato es
     public function store(Request $request){
         $request->validate([
-            'email'=>'required',
+            'email'=>'required|unique:users,email|email:rfc,dns',
             'name'=>'required',
             'password'=>'required',
             'phone'=>'required',
