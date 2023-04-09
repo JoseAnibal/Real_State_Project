@@ -8,3 +8,11 @@ body{
 .main_container{
     flex:1;
 }
+
+.property_image{
+    height: 9rem;
+}
+
+.property_card{
+    max-width: 20rem;
+}

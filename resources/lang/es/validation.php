@@ -196,7 +196,8 @@ return [
         'baths'=>'baños',
         'price'=>'precio',
         'coordinates'=>'coordenadas',
-        'status'=>'estado'
+        'status'=>'estado',
+        'title'=>'título'
     ],
 
 ];

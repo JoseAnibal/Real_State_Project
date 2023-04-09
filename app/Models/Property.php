@@ -14,6 +14,7 @@ use App\Models\Bill;
 class Property extends Model
 {
     use HasFactory;
+    public $timestamps = false;
 
     public function favs(){
         return $this->hasMany(Fav::class);
@@ -34,4 +35,5 @@ class Property extends Model
     public function incidences(){
         return $this->hasMany(Incidence::class);
     }
+
 }

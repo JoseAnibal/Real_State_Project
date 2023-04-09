@@ -10,6 +10,7 @@ use App\Models\User;
 class Fav extends Model
 {
     use HasFactory;
+    public $timestamps = false;
 
     public function user(){
         return $this->belongsTo(User::class);

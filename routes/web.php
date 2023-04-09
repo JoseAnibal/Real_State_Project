@@ -16,7 +16,7 @@ use App\Http\Controllers\UsersController;
 */
 
 Route::get('/', function () {
-    return view('index');
+    return view('app');
 });
 
 Route::get('/users', function () {
@@ -27,7 +27,9 @@ Route::post('/users',[UsersController::class,'store'])->name('user_added');
 
 //PROPIEDADES
 Route::get('/properties_form', function () {
-    return view('Admin/form_add_property');
+    return view('Properties/form_add_property');
 });
 
-Route::post('/properties',[PropertiesController::class,'store'])->name('property_added');
+// Route::post('/properties',[PropertiesController::class,'store'])->name('property_added');
+
+Route::resource('properties',PropertiesController::class);

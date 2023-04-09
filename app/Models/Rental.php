@@ -12,6 +12,7 @@ use App\Models\Incidence;
 class Rental extends Model
 {
     use HasFactory;
+    public $timestamps = false;
 
     public function property(){
         return $this->belongsTo(Property::class,'property_id');

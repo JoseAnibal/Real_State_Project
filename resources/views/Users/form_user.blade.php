@@ -1,4 +1,4 @@
-@extends('index')
+@extends('app')
 
 @section('content')
     <div class="container w-25 border p-4 mt-4">
@@ -13,7 +13,7 @@
                 use App\Models\Property;
 
                 $user=User::first();
-                $property=Property::first();
+                $property=Property::find(10);
 
 
                 //Ver las propiedades(en este caso solo la primera) que tiene el usuario en favorito
@@ -28,14 +28,20 @@
                 // }
                 
                 //Ver todas las facturas de una propiedad
-                dump($property->rentals[0]->bills->toArray());
+                // dump($property->rentals[0]->bills->toArray());
 
                 //Ver todas las incidencias de una propiedad
                 // dump($property->rentals[0]->incidences->toArray());
                 // die();
 
                 //Ver todas las fotos de un piso
-                // dump($property->images->toArray());
+                dump($property->images->toArray());
+                
+                foreach ($property->images as $image) {
+                    echo "<img src='$image->image_url' alt='' width=200px height=200px> <br>";
+                }
+                
+                
 
             @endphp
 
@@ -45,8 +51,8 @@
 
             <h5>Insertar usuario</h5>
             <div class="mb-3">
-            <label for="email" class="form-label">Email</label>
-            <input class="form-control" type="text" placeholder="Default input" aria-label="default input example" name='email'>
+                <label for="email" class="form-label">Email</label>
+                <input class="form-control" type="text" placeholder="Default input" aria-label="default input example" name='email'>
             </div>
             <div class="mb-3">
                 <label for="nombre" class="form-label">Nombre</label>
