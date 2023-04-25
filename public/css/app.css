@@ -1,0 +1,36 @@
+body{
+    text-align:center;
+    display:flex;
+    flex-direction:column;
+    min-height:100vh;
+    justify-content: center;
+    /* background-color: aquamarine; */
+}
+
+main{
+    flex:1;
+    width: 80%;
+    margin: auto;
+}
+
+.property_image{
+    height: 9rem;
+}
+
+.property_card{
+    min-width: max-content;   
+}
+
+.property-desc{
+    text-overflow: ellipsis;
+    overflow: hidden;
+    display: -webkit-box;
+    -webkit-line-clamp: 5;
+    -webkit-box-orient: vertical;
+}
+
+.corner-right{
+    position: absolute;
+    right: 0;
+    top: 0;
+}
