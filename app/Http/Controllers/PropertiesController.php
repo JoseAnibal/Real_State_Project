@@ -65,42 +65,46 @@ class PropertiesController extends Controller
 
         $property->save();
 
-        //MULTIPLE IMAGES PICKER AND VALIDATION
-        $allowed=['png','jpg','jpeg','webp'];
-        $message='Propiedad creada! 😀';
 
-        if($request->file('image')){
+        //MAKE API
+        // return redirect()->route('properties.index')->with('success',$message);
 
-            foreach($request->file('image') as $file){
+        // MULTIPLE IMAGES PICKER AND VALIDATION
+        // $allowed=['png','jpg','jpeg','webp'];
+        // $message='Propiedad creada! 😀';
 
-                $image_name=$property->id.'_'.md5(rand(1000,2000));
-                $extension=strtolower($file->getClientOriginalExtension());
+        // if($request->file('image')){
 
-                if(in_array($extension,$allowed)){
-                    $image_full_name = $image_name.'.'.$extension;
-                    $path='Images/Properties/';
-                    $image_url=$path.$image_full_name;
-                    $file->move($path,$image_full_name);
-                    $image[]=$image_url;
-                }
+        //     foreach($request->file('image') as $file){
 
-            }
+        //         $image_name=$property->id.'_'.md5(rand(1000,2000));
+        //         $extension=strtolower($file->getClientOriginalExtension());
 
-            if(count($request->file('image'))>count($image)){
-                $message.=' (Se ha descartado los archivos que no eran imágenes)';
-            }
+        //         if(in_array($extension,$allowed)){
+        //             $image_full_name = $image_name.'.'.$extension;
+        //             $path='Images/Properties/';
+        //             $image_url=$path.$image_full_name;
+        //             $file->move($path,$image_full_name);
+        //             $image[]=$image_url;
+        //         }
 
-            foreach($image as $key=>$value){
-                Image::create([
-                    'property_id'=>$property->id,
-                    'image_url'=>$value
-                ]);
-            }
-            return redirect()->route('properties.index')->with('success',$message);
-        }else{
-            $message.=' (Sin imágenes)';
-            return redirect()->route('properties.index')->with('warning',$message);
-        }
+        //     }
+
+        //     if(count($request->file('image'))>count($image)){
+        //         $message.=' (Se ha descartado los archivos que no eran imágenes)';
+        //     }
+
+        //     foreach($image as $key=>$value){
+        //         Image::create([
+        //             'property_id'=>$property->id,
+        //             'image_url'=>$value
+        //         ]);
+        //     }
+        //     return redirect()->route('properties.index')->with('success',$message);
+        // }else{
+        //     $message.=' (Sin imágenes)';
+        //     return redirect()->route('properties.index')->with('warning',$message);
+        // }
     }
 
     /**

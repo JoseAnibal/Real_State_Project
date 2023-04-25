@@ -35,7 +35,7 @@ document.addEventListener("DOMContentLoaded", function() {
             contenedor.appendChild(div);
 
             const buttonattr={
-                class:"btn btn-primary rounded-circle",
+                class:"btn btn-primary rounded-circle deleteimage",
                 type:"button",
                 style:"position: absolute; top:0; right:0"
             };
@@ -64,9 +64,20 @@ document.addEventListener("DOMContentLoaded", function() {
                     divaux.setAttribute(attr, divauxattr[attr]);
                 }
 
+                elim.addEventListener('click',(el)=>{
+                    console.log(el.target.parentElement.remove());
+                    // input.splice(i,1);
+                    console.log(input.files);
+                });
+
                 divaux.setAttribute(
                     'style',
                     'position:relative',
+                );
+
+                divaux.setAttribute(
+                    'id',
+                    i,
                 );
 
                 elim.setAttribute(
