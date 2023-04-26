@@ -39,7 +39,31 @@ class PropertiesController extends Controller
      * @return \Illuminate\Http\Response
      */
     public function store(Request $request){
-        $request->validate([
+        // $request->validate([
+        //     'title'=>'required|unique:properties,title',
+        //     'description'=>'required',
+        //     'adress'=>'required',
+        //     'm2'=>'required|numeric|min:1',
+        //     'type'=>'required',
+        //     'price'=>'required|numeric|min:1',
+        //     'coordinates'=>'required',
+        //     'status'=>'required'
+        // ]);
+
+        //TEST DE IMAGENES
+        // $testeo=[];
+        // foreach($request->file('image') as $img){
+        //     $testeo[]=$img->getClientOriginalName();
+        // }
+
+        // return response()->json([
+
+        //     'file'=>$testeo
+
+        // ]);
+
+
+        $rules = [
             'title'=>'required|unique:properties,title',
             'description'=>'required',
             'adress'=>'required',
@@ -48,7 +72,17 @@ class PropertiesController extends Controller
             'price'=>'required|numeric|min:1',
             'coordinates'=>'required',
             'status'=>'required'
-        ]);
+        ];
+    
+        try {
+
+            $validatedData = $request->validate($rules);
+
+        } catch (\Illuminate\Validation\ValidationException $e) {
+
+            return response()->json(['errors' => $e->errors()], 422);
+
+        }
 
         $property=new Property;
 
@@ -65,46 +99,53 @@ class PropertiesController extends Controller
 
         $property->save();
 
-
-        //MAKE API
-        // return redirect()->route('properties.index')->with('success',$message);
-
         // MULTIPLE IMAGES PICKER AND VALIDATION
-        // $allowed=['png','jpg','jpeg','webp'];
-        // $message='Propiedad creada! 😀';
+        $allowed=['png','jpg','jpeg','webp'];
+        $message='Propiedad creada! 😀';
 
-        // if($request->file('image')){
+        if($request->file('image')){
 
-        //     foreach($request->file('image') as $file){
+            foreach($request->file('image') as $file){
 
-        //         $image_name=$property->id.'_'.md5(rand(1000,2000));
-        //         $extension=strtolower($file->getClientOriginalExtension());
+                $image_name=$property->id.'_'.md5(rand(1000,2000));
+                $extension=strtolower($file->getClientOriginalExtension());
 
-        //         if(in_array($extension,$allowed)){
-        //             $image_full_name = $image_name.'.'.$extension;
-        //             $path='Images/Properties/';
-        //             $image_url=$path.$image_full_name;
-        //             $file->move($path,$image_full_name);
-        //             $image[]=$image_url;
-        //         }
+                if(in_array($extension,$allowed)){
+                    $image_full_name = $image_name.'.'.$extension;
+                    $path='Images/Properties/';
+                    $image_url=$path.$image_full_name;
+                    $file->move($path,$image_full_name);
+                    $image[]=$image_url;
+                }
 
-        //     }
+            }
 
-        //     if(count($request->file('image'))>count($image)){
-        //         $message.=' (Se ha descartado los archivos que no eran imágenes)';
-        //     }
+            if(count($request->file('image'))>count($image)){
+                $message.=' (Se ha descartado los archivos que no eran imágenes)';
+            }
 
-        //     foreach($image as $key=>$value){
-        //         Image::create([
-        //             'property_id'=>$property->id,
-        //             'image_url'=>$value
-        //         ]);
-        //     }
-        //     return redirect()->route('properties.index')->with('success',$message);
-        // }else{
-        //     $message.=' (Sin imágenes)';
-        //     return redirect()->route('properties.index')->with('warning',$message);
-        // }
+            foreach($image as $key=>$value){
+                Image::create([
+                    'property_id'=>$property->id,
+                    'image_url'=>$value
+                ]);
+            }
+
+            return response()->json([
+
+                'message'=>$message
+
+            ]);
+            // return redirect()->route('properties.index')->with('success',$message);
+        }else{
+            $message.=' (Sin imágenes)';
+            return response()->json([
+
+                'message'=>$message
+
+            ]);
+            // return redirect()->route('properties.index')->with('warning',$message);
+        }
     }
 
     /**
