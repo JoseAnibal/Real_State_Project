@@ -20,3 +20,5 @@ Route::middleware('auth:sanctum')->get('/user', function (Request $request) {
 });
 
 Route::Post('store_property',[PropertiesController::class,'store']);
+
+Route::Post('update_property',[PropertiesController::class,'update']);

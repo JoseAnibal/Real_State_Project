@@ -2,8 +2,8 @@
 
 @section('content')
 
-    <div class="col-8 col-md-6 col-xl-4 container border rounded p-4 my-4 mx-0">
-        <form action="{{route('properties.store')}}" method="POST" enctype="multipart/form-data" id="formApi">
+    <div class="col-8 col-md-6 col-xl-4 container border rounded p-4 my-4 mx-0 divcreate" style="position: relative ">
+        <form enctype="multipart/form-data" id="formApi">
             @csrf
             @if (session('success'))
                 <div class="alert alert-success" role="alert">{{session('success')}}</div>
@@ -14,20 +14,24 @@
             @endif
 
             <h5>Insertar Propiedad</h5>
-            <div class="imagesselector">
-
-            </div>
             <div class="mb-3 forjs">
                 <label for="title" class="form-label">Título</label>
-                <input class="form-control" type="text" placeholder="Default input" aria-label="default input example" name='title'>
+                <input class="form-control" type="text" aria-label="default input example" name='title'>
             </div>
             <div class="mb-3 forjs">
                 <label for="descripcion" class="form-label">Descripción</label>
                 <input type="text" class="form-control" name='description'>
             </div>
             <div class="mb-3">
-                <label for="images" class="form-label">Imágenes</label>
-                <input type="file" class="form-control imagesarray" name="image[]" multiple>
+                <h6>Imágenes</h6>
+                <div class="imagesselector my-2">
+
+                </div>
+                <label class="btn btn-default btn-sm center-block btn-file col-12 rounded-4 text-light imageuploader border-0">
+                    <i class="fa fa-upload" aria-hidden="true"></i>
+                    <b>Subir Imágenes</b>
+                    <input type="file" class="form-control imagesarray" accept="image/*" name="image[]" multiple style="display: none;">
+                  </label>
             </div>
             <div class="mb-3 forjs">
                 <label for="adress" class="form-label">Dirección</label>
@@ -63,7 +67,7 @@
                     <option value="1">En venta</option>
                 </select>
             </div>
-            <button type="submit" class="btn btn-primary">Submit</button>
         </form>
+        <button class="btn btn-primary sendButton">Crear</button>
     </div>
 @endsection

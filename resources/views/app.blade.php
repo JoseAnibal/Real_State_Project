@@ -63,6 +63,17 @@
         @yield('content')
     </main>
 
+    <div class="cargando hide">
+      <div class="contenedorcar">
+          <div class="lds-ripple"><div></div><div></div></div>
+          <div><h4>Cargando...</h4></div>
+      </div>
+    </div>
+
+    <div class="message hide">
+
+    </div>
+
     <footer class="bg-secondary text-center text-lg-start text-white" data-bs-theme="dark">
       <!-- Grid container -->
       <div class="container p-2">

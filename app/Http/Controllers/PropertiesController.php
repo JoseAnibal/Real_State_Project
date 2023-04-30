@@ -80,7 +80,7 @@ class PropertiesController extends Controller
 
         } catch (\Illuminate\Validation\ValidationException $e) {
 
-            return response()->json(['errors' => $e->errors()], 422);
+            return response()->json(['errors' => $e->errors()], 400);
 
         }
 
@@ -172,6 +172,11 @@ class PropertiesController extends Controller
     {
         //
         $property_o=Property::find($property);
+
+        if(empty($property_o)){
+            return redirect(route("properties.index"));
+        }
+
         $formu=GeneralFunction::dropdownTypes($property_o->type);
 
         return view('properties.edit',['property'=>$property_o,'formu'=>$formu]);
@@ -187,6 +192,7 @@ class PropertiesController extends Controller
     public function update(Request $request, $property)
     {
         //
+        dd($property);
         $request->validate([
             'title'=>'required|unique:properties,title,'.$property,
             'description'=>'required',
@@ -224,6 +230,7 @@ class PropertiesController extends Controller
     {
         //
         $property_o=Property::find($property);
+        $property_o->images()->delete();
         $property_o->delete();
 
         return redirect()->route('properties.index')->with('success','Propiedad eliminada!🤯');
