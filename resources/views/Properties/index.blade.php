@@ -45,14 +45,14 @@
                         <ul class="dropdown-menu col-6">
                             <li>
                                 <form action="{{route('properties.edit', ['property'=>$property->id])}}" method="get" class="dropdown-item px-0 col-8">
-                                    <button type="submit" class="btn col-12 px-0 border-0"><i class="fa-solid fa-pen-to-square"></i> Editar</button>
+                                    <button type="submit" class="btn col-12 px-0 border-0"><i class="fa-solid fa-pen-to-square"></i>Editar</button>
                                 </form>
                             </li>
                             <li>
                                 <form action="{{route('properties.destroy', ['property'=>$property->id])}}" method="post" class="dropdown-item px-0 col-8">
                                     @method('DELETE')
                                     @csrf
-                                    <button type="submit" class="btn col-12 px-0 border-0"><i class="fa-solid fa-trash"></i> Eliminar</button>
+                                    <button type="submit" class="btn col-12 px-0 border-0"><i class="fa-solid fa-trash"></i>Eliminar</button>
                                 </form>
                             </li>
                         </ul>

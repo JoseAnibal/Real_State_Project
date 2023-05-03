@@ -6,6 +6,10 @@ use App\Models\Property;
 use App\Models\Image;
 use App\Models\GeneralFunction;
 use Illuminate\Http\Request;
+use Illuminate\Mail\Mailables\Content;
+use Illuminate\Support\Facades\Storage;
+
+use function PHPSTORM_META\map;
 
 class PropertiesController extends Controller
 {
@@ -29,7 +33,7 @@ class PropertiesController extends Controller
     {
         //
         $formu=GeneralFunction::dropdownTypes();
-        return view('properties.create',['formu'=>$formu,'js'=>asset("js/Properties/create_properties.js")]);
+        return view('properties.create',['formu'=>$formu,'js'=>asset("js/Properties/create_property.js")]);
     }
 
     /**
@@ -49,24 +53,10 @@ class PropertiesController extends Controller
         //     'coordinates'=>'required',
         //     'status'=>'required'
         // ]);
-
-        //TEST DE IMAGENES
-        // $testeo=[];
-        // foreach($request->file('image') as $img){
-        //     $testeo[]=$img->getClientOriginalName();
-        // }
-
-        // return response()->json([
-
-        //     'file'=>$testeo
-
-        // ]);
-
-
         $rules = [
-            'title'=>'required|unique:properties,title',
-            'description'=>'required',
-            'adress'=>'required',
+            'title'=>'required|unique:properties,title|max:100',
+            'description'=>'required|max:255',
+            'adress'=>'required|max:255',
             'm2'=>'required|numeric|min:1',
             'type'=>'required',
             'price'=>'required|numeric|min:1',
@@ -177,9 +167,23 @@ class PropertiesController extends Controller
             return redirect(route("properties.index"));
         }
 
-        $formu=GeneralFunction::dropdownTypes($property_o->type);
+        return view('properties.edit',['property'=>$property_o, 'js'=>asset("js/Properties/update_property.js")]);
 
-        return view('properties.edit',['property'=>$property_o,'formu'=>$formu]);
+        
+    }
+
+    public function propertyImages($property){
+        $property_o=Property::find($property);
+
+        if(empty($property_o->images)){
+            return response()->json(['errors' => 'Esta propiedad no tiene imagenes'], 400);
+        }
+
+        $images=array_map(function($item) {
+            return $item['image_url'];
+        }, ($property_o->images)->toArray());
+
+        return response()->json(['data' => $images]);
     }
 
     /**
@@ -189,21 +193,40 @@ class PropertiesController extends Controller
      * @param  int  $id
      * @return \Illuminate\Http\Response
      */
-    public function update(Request $request, $property)
+    public function updateApi(Request $request, $property)
     {
         //
-        dd($property);
-        $request->validate([
-            'title'=>'required|unique:properties,title,'.$property,
-            'description'=>'required',
-            'adress'=>'required',
+        // $request->validate([
+        //     'title'=>'required|unique:properties,title,'.$property,
+        //     'description'=>'required',
+        //     'adress'=>'required',
+        //     'm2'=>'required|numeric|min:1',
+        //     'price'=>'required|numeric|min:1',
+        //     'coordinates'=>'required',
+        //     'status'=>'required|numeric'
+        // ]);
+
+        $property_o=Property::find($property);
+
+        $rules = [
+            'title'=>'required|unique:properties,title,'.$property.'| max:100',
+            'description'=>'required|max:255',
+            'adress'=>'required|max:255',
             'm2'=>'required|numeric|min:1',
             'price'=>'required|numeric|min:1',
             'coordinates'=>'required',
             'status'=>'required|numeric'
-        ]);
+        ];
+    
+        try {
 
-        $property_o=Property::find($property);
+            $validatedData = $request->validate($rules);
+
+        } catch (\Illuminate\Validation\ValidationException $e) {
+
+            return response()->json(['errors' => $e->errors()], 400);
+
+        }
 
         $property_o->title=$request->title;
         $property_o->description=$request->description;
@@ -217,7 +240,64 @@ class PropertiesController extends Controller
 
         $property_o->save();
 
-        return redirect()->route('properties.index')->with('success','Propiedad actualizada!😀');
+        // MULTIPLE IMAGES PICKER AND VALIDATION
+        $allowed=['png','jpg','jpeg','webp'];
+        $message='Propiedad actualizada! 😀';
+
+        if ($request->file('image')) {
+            return response()->json(['errors' => "HAY IMAGENES"], 400);
+        }else{
+            return response()->json(['errors' => "NO HAY IMAGENES"], 400);
+        }
+
+        if($request->file('image')){
+
+            //DELETE IMAGES FROM DATABASE AND LOCAL
+            foreach(($property_o->images)->toArray() as $image){
+                unlink(public_path($image['image_url']));
+            }
+            $property_o->images()->delete();
+
+            //PROCESS TO UPLOAD NEW IMAGES
+            foreach($request->file('image') as $file){
+
+                $image_name=$property_o->id.'_'.md5(rand(1000,2000));
+                $extension=strtolower($file->getClientOriginalExtension());
+
+                if(in_array($extension,$allowed)){
+                    $image_full_name = $image_name.'.'.$extension;
+                    $path='Images/Properties/';
+                    $image_url=$path.$image_full_name;
+                    $file->move($path,$image_full_name);
+                    $image[]=$image_url;
+                }
+
+            }
+
+            if(count($request->file('image'))>count($image)){
+                $message.=' (Se ha descartado los archivos que no eran imágenes)';
+            }
+
+            foreach($image as $key=>$value){
+                Image::create([
+                    'property_id'=>$property_o->id,
+                    'image_url'=>$value
+                ]);
+            }
+
+            return response()->json([
+
+                'message'=>$message
+
+            ]);
+        }else{
+            $message.=' (Sin imágenes)';
+            return response()->json([
+
+                'message'=>$message
+
+            ]);
+        }
     }
 
     /**
@@ -230,6 +310,11 @@ class PropertiesController extends Controller
     {
         //
         $property_o=Property::find($property);
+
+        foreach(($property_o->images)->toArray() as $image){
+            unlink(public_path($image['image_url']));
+        }
+
         $property_o->images()->delete();
         $property_o->delete();
 

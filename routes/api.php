@@ -21,4 +21,6 @@ Route::middleware('auth:sanctum')->get('/user', function (Request $request) {
 
 Route::Post('store_property',[PropertiesController::class,'store']);
 
-Route::Post('update_property',[PropertiesController::class,'update']);
+Route::patch('update_property/{property}',[PropertiesController::class,'updateApi']);
+
+//MAKE API TO INSERT IMAGES WHEN EDITING
