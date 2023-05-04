@@ -13,7 +13,7 @@
 
     <section class="col-12 mt-3">
         <form action="{{route('properties.create')}}" method="get">
-            <button type="submit" class="btn btn-success rounded-4 borderfade border-0">Añadir Porpiedad <i class="fa-solid fa-plus"></i></button>
+            <button type="submit" class="btn btn-success rounded-4 borderfade border-0">Añadir Propiedad <i class="fa-solid fa-plus"></i></button>
         </form>
     </section>
 

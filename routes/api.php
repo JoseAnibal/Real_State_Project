@@ -24,3 +24,4 @@ Route::Post('store_property',[PropertiesController::class,'store']);
 Route::patch('update_property/{property}',[PropertiesController::class,'updateApi']);
 
 //MAKE API TO INSERT IMAGES WHEN EDITING
+Route::post('upload_images/{property}',[PropertiesController::class,'uploadImages']);

@@ -110,6 +110,32 @@ document.addEventListener("DOMContentLoaded", function() {
             const data=new URLSearchParams(formData);
             console.log(data);
 
+            if(arrayImagenes.length != 0){
+
+                console.log('HAY ARCHIVOS');
+
+                const images = new FormData();
+                arrayImagenes.forEach((e,i)=>{
+                    images.append('image[]', e);
+                });
+
+                const respuestaImg=await fetch('http://127.0.0.1:8000/api/upload_images/'+idproperty,{
+                    method: 'POST',
+                    body: images
+                });
+
+                const datos2=await respuestaImg.json();
+
+                console.log(images);
+                console.log(datos2);
+
+                if(respuestaImg.ok){
+                    cargando.classList.add('hide');
+                    
+                }
+
+            }
+
             const respuesta=await fetch('http://127.0.0.1:8000/api/update_property/'+idproperty,{
                 method: 'PATCH',
                 body: data
@@ -118,6 +144,7 @@ document.addEventListener("DOMContentLoaded", function() {
 
             if(respuesta.ok){
                 cargando.classList.add('hide');
+                window.location.href = "http://127.0.0.1:8000/properties";
             }else{
                 for(const llave in datos.errors){
                     showAlert(datos.errors[llave][0],"danger");

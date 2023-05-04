@@ -63,7 +63,7 @@ class PropertiesController extends Controller
             'coordinates'=>'required',
             'status'=>'required'
         ];
-    
+
         try {
 
             $validatedData = $request->validate($rules);
@@ -169,7 +169,7 @@ class PropertiesController extends Controller
 
         return view('properties.edit',['property'=>$property_o, 'js'=>asset("js/Properties/update_property.js")]);
 
-        
+
     }
 
     public function propertyImages($property){
@@ -184,6 +184,54 @@ class PropertiesController extends Controller
         }, ($property_o->images)->toArray());
 
         return response()->json(['data' => $images]);
+    }
+
+    public function uploadImages(Request $request,$property){
+        $property_o=Property::find($property);
+
+        // MULTIPLE IMAGES PICKER AND VALIDATION
+        $allowed=['png','jpg','jpeg','webp'];
+        $message='Imágenes actualizadas! 🌄';
+
+        if($request->file('image')){
+
+            //DELETE IMAGES FROM DATABASE AND LOCAL
+            foreach(($property_o->images)->toArray() as $image){
+                unlink(public_path($image['image_url']));
+            }
+            $property_o->images()->delete();
+
+            $image=[];
+            //PROCESS TO UPLOAD NEW IMAGES
+            foreach($request->file('image') as $file){
+
+                $image_name=$property_o->id.'_'.md5(rand(1000,2000));
+                $extension=strtolower($file->getClientOriginalExtension());
+
+                if(in_array($extension,$allowed)){
+                    $image_full_name = $image_name.'.'.$extension;
+                    $path='Images/Properties/';
+                    $image_url=$path.$image_full_name;
+                    $file->move($path,$image_full_name);
+                    $image[]=$image_url;
+                }
+
+            }
+
+            foreach($image as $key=>$value){
+                Image::create([
+                    'property_id'=>$property_o->id,
+                    'image_url'=>$value
+                ]);
+            }
+
+            return response()->json([
+
+                'message'=>$request->file('image')
+
+            ]);
+        }
+
     }
 
     /**
@@ -217,7 +265,7 @@ class PropertiesController extends Controller
             'coordinates'=>'required',
             'status'=>'required|numeric'
         ];
-    
+
         try {
 
             $validatedData = $request->validate($rules);
@@ -240,64 +288,8 @@ class PropertiesController extends Controller
 
         $property_o->save();
 
-        // MULTIPLE IMAGES PICKER AND VALIDATION
-        $allowed=['png','jpg','jpeg','webp'];
-        $message='Propiedad actualizada! 😀';
+        return response()->json(['message' => 'Propiedad editada!']);
 
-        if ($request->file('image')) {
-            return response()->json(['errors' => "HAY IMAGENES"], 400);
-        }else{
-            return response()->json(['errors' => "NO HAY IMAGENES"], 400);
-        }
-
-        if($request->file('image')){
-
-            //DELETE IMAGES FROM DATABASE AND LOCAL
-            foreach(($property_o->images)->toArray() as $image){
-                unlink(public_path($image['image_url']));
-            }
-            $property_o->images()->delete();
-
-            //PROCESS TO UPLOAD NEW IMAGES
-            foreach($request->file('image') as $file){
-
-                $image_name=$property_o->id.'_'.md5(rand(1000,2000));
-                $extension=strtolower($file->getClientOriginalExtension());
-
-                if(in_array($extension,$allowed)){
-                    $image_full_name = $image_name.'.'.$extension;
-                    $path='Images/Properties/';
-                    $image_url=$path.$image_full_name;
-                    $file->move($path,$image_full_name);
-                    $image[]=$image_url;
-                }
-
-            }
-
-            if(count($request->file('image'))>count($image)){
-                $message.=' (Se ha descartado los archivos que no eran imágenes)';
-            }
-
-            foreach($image as $key=>$value){
-                Image::create([
-                    'property_id'=>$property_o->id,
-                    'image_url'=>$value
-                ]);
-            }
-
-            return response()->json([
-
-                'message'=>$message
-
-            ]);
-        }else{
-            $message.=' (Sin imágenes)';
-            return response()->json([
-
-                'message'=>$message
-
-            ]);
-        }
     }
 
     /**
