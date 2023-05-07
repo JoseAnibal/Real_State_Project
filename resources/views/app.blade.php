@@ -15,6 +15,22 @@
     <link href={{asset("css/app.css")}} rel="stylesheet" type="text/css" >
 </head>
 <body>
+
+  @php
+    
+      var_dump(session()->get('admin', false));
+
+  @endphp
+
+  {{-- @if ($request->session()->get('admin', false))
+    
+
+
+  @elseif ()
+
+
+
+  @endif --}}
     <nav class="navbar navbar-expand-lg bg-body-tertiary">
         <div class="container-fluid">
           <a class="navbar-brand" href="#">Navbar</a>
