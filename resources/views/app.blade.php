@@ -22,46 +22,100 @@
 
   @endphp
 
-  {{-- @if ($request->session()->get('admin', false))
+  @if (session()->get('admin', false))
     
-
-
-  @elseif ()
-
-
-
-  @endif --}}
-    <nav class="navbar navbar-expand-lg bg-body-tertiary">
-        <div class="container-fluid">
-          <a class="navbar-brand" href="#">Navbar</a>
-          <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarNavDropdown" aria-controls="navbarNavDropdown" aria-expanded="false" aria-label="Toggle navigation">
-            <span class="navbar-toggler-icon"></span>
-          </button>
-          <div class="collapse navbar-collapse" id="navbarNavDropdown">
-            <ul class="navbar-nav">
-              <li class="nav-item">
-                <a class="nav-link active" aria-current="page" href="#">Home</a>
-              </li>
-              <li class="nav-item">
-                <a class="nav-link" href="#">Features</a>
-              </li>
-              <li class="nav-item">
-                <a class="nav-link" href="#">Pricing</a>
-              </li>
-              <li class="nav-item dropdown">
-                <a class="nav-link dropdown-toggle" href="#" role="button" data-bs-toggle="dropdown" aria-expanded="false">
-                  Dropdown link
-                </a>
-                <ul class="dropdown-menu">
-                  <li><a class="dropdown-item" href="#">Action</a></li>
-                  <li><a class="dropdown-item" href="#">Another action</a></li>
-                  <li><a class="dropdown-item" href="#">Something else here</a></li>
-                </ul>
-              </li>
-            </ul>
-          </div>
+  <nav class="navbar navbar-expand-lg bg-body-tertiary">
+    <div class="container-fluid gap-3">
+      <div class="logoD d-flex">
+        <img src="{{asset('Images/assets/logo.png')}}" alt="" class="object-fit-cover w-100 rounded-4">
+      </div>
+      
+      <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarNavDropdown" aria-controls="navbarNavDropdown" aria-expanded="false" aria-label="Toggle navigation">
+        <span class="navbar-toggler-icon"></span>
+      </button>
+      <div class="collapse navbar-collapse" id="navbarNavDropdown">
+        <div>
+          <ul class="navbar-nav">
+            <li class="nav-item">
+              <a class="nav-link active" aria-current="page" href="#">Inicio</a>
+            </li>
+            <li class="nav-item">
+              <a class="nav-link" href="#">Alquiler</a>
+            </li>
+            <li class="nav-item">
+              <a class="nav-link" href="#">Comprar</a>
+            </li>
+            <li class="nav-item">
+              <a class="nav-link" href="#">Quiénes somos</a>
+            </li>
+            {{-- <li class="nav-item dropdown">
+              <a class="nav-link dropdown-toggle" href="#" role="button" data-bs-toggle="dropdown" aria-expanded="false">
+                Dropdown link
+              </a>
+              <ul class="dropdown-menu">
+                <li><a class="dropdown-item" href="#">Action</a></li>
+                <li><a class="dropdown-item" href="#">Another action</a></li>
+                <li><a class="dropdown-item" href="#">Something else here</a></li>
+              </ul>
+            </li> --}}
+          </ul>
         </div>
-    </nav>
+
+        <div>
+          hola prueba
+        </div>
+        
+      </div>
+    </div>
+  </nav>
+
+  @else
+
+  <nav class="navbar navbar-expand-lg bg-body-tertiary">
+    <div class="container-fluid gap-3">
+      <div class="logoD d-flex">
+        <img src="{{asset('Images/assets/logo.png')}}" alt="" class="object-fit-cover w-100 rounded-4">
+      </div>
+      
+      <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarNavDropdown" aria-controls="navbarNavDropdown" aria-expanded="false" aria-label="Toggle navigation">
+        <span class="navbar-toggler-icon"></span>
+      </button>
+      <div class="collapse navbar-collapse justify-content-between" id="navbarNavDropdown">
+        <div>
+          <ul class="navbar-nav">
+            <li class="nav-item">
+              <a class="nav-link active" aria-current="page" href="#">Inicio</a>
+            </li>
+            <li class="nav-item">
+              <a class="nav-link" href="#">Alquiler</a>
+            </li>
+            <li class="nav-item">
+              <a class="nav-link" href="#">Compra</a>
+            </li>
+            <li class="nav-item">
+              <a class="nav-link" href="#">Quiénes somos</a>
+            </li>
+            {{-- <li class="nav-item dropdown">
+              <a class="nav-link dropdown-toggle" href="#" role="button" data-bs-toggle="dropdown" aria-expanded="false">
+                Dropdown link
+              </a>
+              <ul class="dropdown-menu">
+                <li><a class="dropdown-item" href="#">Action</a></li>
+                <li><a class="dropdown-item" href="#">Another action</a></li>
+                <li><a class="dropdown-item" href="#">Something else here</a></li>
+              </ul>
+            </li> --}}
+          </ul>
+        </div>
+        <div>
+          <i class="fa-solid fa-user" style="color: #15becc;"></i>Login
+        </div>
+        
+      </div>
+    </div>
+  </nav>
+
+  @endif
 
     <main class="d-flex justify-content-center">
       <?php

@@ -26,6 +26,8 @@ class AuthController extends Controller
             if (Auth::user()->type == 3) {
                 $request->session()->put('admin', true);
                 return redirect('properties.index');
+            }else{
+                $request->session()->put('admin', false);
             }
             // dd($request->session()->get('admin', false));
             return redirect('app');

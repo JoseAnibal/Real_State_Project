@@ -139,3 +139,8 @@ main{
 .borderfade{
   background: linear-gradient(90deg, #2fbf9c 0%, #0074ff 100%);
 }
+
+.logoD{
+  width: 7rem;
+  height: 4rem;
+}
