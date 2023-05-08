@@ -18,59 +18,14 @@
 
   @php
     
-      var_dump(session()->get('admin', false));
+      var_dump(session()->get('admin'));
 
   @endphp
 
-  @if (session()->get('admin', false))
+  @if (empty(session()->get('admin')))
+
+  SESION VACIA
     
-  <nav class="navbar navbar-expand-lg bg-body-tertiary">
-    <div class="container-fluid gap-3">
-      <div class="logoD d-flex">
-        <img src="{{asset('Images/assets/logo.png')}}" alt="" class="object-fit-cover w-100 rounded-4">
-      </div>
-      
-      <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarNavDropdown" aria-controls="navbarNavDropdown" aria-expanded="false" aria-label="Toggle navigation">
-        <span class="navbar-toggler-icon"></span>
-      </button>
-      <div class="collapse navbar-collapse" id="navbarNavDropdown">
-        <div>
-          <ul class="navbar-nav">
-            <li class="nav-item">
-              <a class="nav-link active" aria-current="page" href="#">Inicio</a>
-            </li>
-            <li class="nav-item">
-              <a class="nav-link" href="#">Alquiler</a>
-            </li>
-            <li class="nav-item">
-              <a class="nav-link" href="#">Comprar</a>
-            </li>
-            <li class="nav-item">
-              <a class="nav-link" href="#">Quiénes somos</a>
-            </li>
-            {{-- <li class="nav-item dropdown">
-              <a class="nav-link dropdown-toggle" href="#" role="button" data-bs-toggle="dropdown" aria-expanded="false">
-                Dropdown link
-              </a>
-              <ul class="dropdown-menu">
-                <li><a class="dropdown-item" href="#">Action</a></li>
-                <li><a class="dropdown-item" href="#">Another action</a></li>
-                <li><a class="dropdown-item" href="#">Something else here</a></li>
-              </ul>
-            </li> --}}
-          </ul>
-        </div>
-
-        <div>
-          hola prueba
-        </div>
-        
-      </div>
-    </div>
-  </nav>
-
-  @else
-
   <nav class="navbar navbar-expand-lg bg-body-tertiary">
     <div class="container-fluid gap-3">
       <div class="logoD d-flex">
@@ -107,13 +62,120 @@
             </li> --}}
           </ul>
         </div>
-        <div>
-          <i class="fa-solid fa-user" style="color: #15becc;"></i>Login
+        <div class="loginbtn">
+          <form action="{{route('loginform')}}" method="get">
+            <button type="submit" class="rounded-4 border-0 p-2"><i class="fa-solid fa-user me-1" style="color: #0070f0;"></i> Iniciar sesión</button>
+          </form>
         </div>
         
       </div>
     </div>
   </nav>
+
+  @else
+    @if (!session()->get('admin',false))
+    <nav class="navbar navbar-expand-lg bg-body-tertiary">
+      <div class="container-fluid gap-3">
+        <div class="logoD d-flex">
+          <img src="{{asset('Images/assets/logo.png')}}" alt="" class="object-fit-cover w-100 rounded-4">
+        </div>
+        
+        <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarNavDropdown" aria-controls="navbarNavDropdown" aria-expanded="false" aria-label="Toggle navigation">
+          <span class="navbar-toggler-icon"></span>
+        </button>
+        <div class="collapse navbar-collapse justify-content-between" id="navbarNavDropdown">
+          <div>
+            <ul class="navbar-nav">
+              <li class="nav-item">
+                <a class="nav-link active" aria-current="page" href="#">Inicio</a>
+              </li>
+              <li class="nav-item">
+                <a class="nav-link" href="#">Alquiler</a>
+              </li>
+              <li class="nav-item">
+                <a class="nav-link" href="#">Compra</a>
+              </li>
+              <li class="nav-item">
+                <a class="nav-link" href="#">Quiénes somos</a>
+              </li>
+              {{-- <li class="nav-item dropdown">
+                <a class="nav-link dropdown-toggle" href="#" role="button" data-bs-toggle="dropdown" aria-expanded="false">
+                  Dropdown link
+                </a>
+                <ul class="dropdown-menu">
+                  <li><a class="dropdown-item" href="#">Action</a></li>
+                  <li><a class="dropdown-item" href="#">Another action</a></li>
+                  <li><a class="dropdown-item" href="#">Something else here</a></li>
+                </ul>
+              </li> --}}
+            </ul>
+          </div>
+          <div class="loginbtn">
+            <form action="{{route('logout')}}" method="post">
+              @csrf
+              <button type="submit" class="rounded-4 border-0 p-2"><i class="fa-solid fa-right-from-bracket me-1" style="color: #0070f0;"></i>Cerrar sesión</button>
+            </form>
+          </div>
+          
+        </div>
+      </div>
+    </nav>
+    @else
+      
+    <nav class="navbar navbar-expand-lg bg-body-tertiary">
+      <div class="container-fluid gap-3">
+        <div class="logoD d-flex">
+          <img src="{{asset('Images/assets/logo.png')}}" alt="" class="object-fit-cover w-100 rounded-4">
+        </div>
+        
+        <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarNavDropdown" aria-controls="navbarNavDropdown" aria-expanded="false" aria-label="Toggle navigation">
+          <span class="navbar-toggler-icon"></span>
+        </button>
+        <div class="collapse navbar-collapse justify-content-between" id="navbarNavDropdown">
+          <div>
+            <ul class="navbar-nav">
+              <li class="nav-item">
+                <a class="nav-link active" aria-current="page" href="#">Inicio</a>
+              </li>
+              <li class="nav-item">
+                <a class="nav-link" href="{{route('properties.index')}}">Propiedades</a>
+              </li>
+              <li class="nav-item">
+                <a class="nav-link" href="{{route('users.index')}}">Usuarios</a>
+              </li>
+              <li class="nav-item">
+                <a class="nav-link" href="#">Incidencias</a>
+              </li>
+              <li class="nav-item">
+                <a class="nav-link" href="#">Facturas</a>
+              </li>
+              <li class="nav-item">
+                <a class="nav-link" href="#">Chat</a>
+              </li>
+              {{-- <li class="nav-item dropdown">
+                <a class="nav-link dropdown-toggle" href="#" role="button" data-bs-toggle="dropdown" aria-expanded="false">
+                  Dropdown link
+                </a>
+                <ul class="dropdown-menu">
+                  <li><a class="dropdown-item" href="#">Action</a></li>
+                  <li><a class="dropdown-item" href="#">Another action</a></li>
+                  <li><a class="dropdown-item" href="#">Something else here</a></li>
+                </ul>
+              </li> --}}
+            </ul>
+          </div>
+          <div class="loginbtn">
+            <form action="{{route('logout')}}" method="post">
+              @csrf
+              <button type="submit" class="rounded-4 border-0 p-2"><i class="fa-solid fa-right-from-bracket me-1" style="color: #0070f0;"></i>Cerrar sesión</button>
+            </form>
+          </div>
+          
+        </div>
+      </div>
+    </nav>
+
+    @endif
 
   @endif
 
@@ -203,7 +265,7 @@
       <!-- Grid container -->
   
       <!-- Copyright -->
-      <div class="text-center p-3" style="background-color: rgba(0, 0, 0, 0.2)">
+      <div class="text-center p-3" style="background-color: #00000033">
         © 2020 Copyright:
         <a class="text-white" href="#">REG.com</a>
       </div>

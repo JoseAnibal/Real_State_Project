@@ -31,10 +31,13 @@ Route::get('/properties_form', function () {
     return view('Properties/form_add_property');
 });
 
-// Route::post('/properties',[PropertiesController::class,'store'])->name('property_added');
-
+//ROUTES FOR PROPERTIES
 Route::resource('properties',PropertiesController::class);
 
+//ROUTES FOR USERS
+Route::resource('users',UsersController::class);
+
+//ROUTES FOR LOGIN/LOGOUT
 Route::get('/loginform',[AuthController::class,'showLoginForm'])->name('loginform');
 Route::post('/login',[AuthController::class,'login'])->name('login');
 Route::post('/logout',[AuthController::class,'logout'])->name('logout');

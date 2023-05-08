@@ -168,8 +168,6 @@ class PropertiesController extends Controller
         }
 
         return view('properties.edit',['property'=>$property_o, 'js'=>asset("js/Properties/update_property.js")]);
-
-
     }
 
     public function propertyImages($property){
