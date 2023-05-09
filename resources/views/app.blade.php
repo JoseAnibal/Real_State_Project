@@ -17,14 +17,17 @@
 <body>
 
   @php
-    
+      echo "Es admin: ";
       var_dump(session()->get('admin'));
-
+      echo " | ";
+      echo "Es user: ";
+      var_dump(session()->get('user'));
+      echo " | ";
   @endphp
 
-  @if (empty(session()->get('admin')))
+  @if (!Auth::check())
 
-  SESION VACIA
+  NO SESSION
     
   <nav class="navbar navbar-expand-lg bg-body-tertiary">
     <div class="container-fluid gap-3">
@@ -39,7 +42,7 @@
         <div>
           <ul class="navbar-nav">
             <li class="nav-item">
-              <a class="nav-link active" aria-current="page" href="#">Inicio</a>
+              <a class="nav-link active" aria-current="page" href="{{route('home')}}">Inicio</a>
             </li>
             <li class="nav-item">
               <a class="nav-link" href="#">Alquiler</a>
@@ -87,7 +90,7 @@
           <div>
             <ul class="navbar-nav">
               <li class="nav-item">
-                <a class="nav-link active" aria-current="page" href="#">Inicio</a>
+                <a class="nav-link active" aria-current="page" href="{{route('home')}}">Inicio</a>
               </li>
               <li class="nav-item">
                 <a class="nav-link" href="#">Alquiler</a>
@@ -135,7 +138,7 @@
           <div>
             <ul class="navbar-nav">
               <li class="nav-item">
-                <a class="nav-link active" aria-current="page" href="#">Inicio</a>
+                <a class="nav-link active" aria-current="page" href="{{route('home')}}">Inicio</a>
               </li>
               <li class="nav-item">
                 <a class="nav-link" href="{{route('properties.index')}}">Propiedades</a>

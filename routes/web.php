@@ -1,6 +1,7 @@
 <?php
 
 use App\Http\Controllers\AuthController;
+use App\Http\Controllers\HomeController;
 use Illuminate\Support\Facades\Route;
 use App\Http\Controllers\PropertiesController;
 use App\Http\Controllers\UsersController;
@@ -27,9 +28,11 @@ Route::get('/users', function () {
 Route::post('/users',[UsersController::class,'store'])->name('user_added');
 
 //PROPIEDADES
-Route::get('/properties_form', function () {
-    return view('Properties/form_add_property');
-});
+// Route::get('/properties_form', function () {
+//     return view('Properties/form_add_property');
+// });
+
+Route::get('/home',[HomeController::class,'index'])->name('home');
 
 //ROUTES FOR PROPERTIES
 Route::resource('properties',PropertiesController::class);

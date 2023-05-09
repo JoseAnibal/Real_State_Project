@@ -13,7 +13,7 @@
                 {!! implode('', $errors->all("<div class='alert alert-danger' role='alert'>:message</div>")) !!}
             @endif
 
-            <h5>Insertar Propiedad</h5>
+            <h5>Editar Propiedad</h5>
             <div class="mb-3 forjs">
                 <label for="title" class="form-label">Título</label>
                 <input class="form-control" type="text" aria-label="default input example" name='title' value="{{$property->title}}">

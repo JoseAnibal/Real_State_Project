@@ -28,6 +28,7 @@ class AuthController extends Controller
                 return redirect('properties.index');
             }else{
                 $request->session()->put('admin', false);
+                $request->session()->put('user', $request->email);
             }
             // dd($request->session()->get('admin', false));
             return redirect('app');
