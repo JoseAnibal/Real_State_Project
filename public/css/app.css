@@ -143,3 +143,17 @@ main{
   width: 7rem;
   height: 4rem;
 }
+
+a{
+  text-decoration: none;
+}
+
+#imagesfield{
+  margin-left: calc(-50vw + 50%);
+  width: 100vw;
+}
+
+.miniimage{
+  width: 7rem;
+  height: 5rem;
+}

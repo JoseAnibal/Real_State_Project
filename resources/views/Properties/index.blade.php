@@ -23,15 +23,17 @@
             <article class="rounded-4 property_card my-3 mx-auto mx-md-0 px-0 col-6 d-flex justify-content-center">
 
                 <div class="card col-11 border-0 p-2 rounded-4" style="width: 16rem; background-color: #e4e3e3">
-
+                    <a href="{{route('properties.show',['property'=>$property->id])}}">
                     @if (empty($property->images[0]->image_url))                    
                         <img src="{{asset('Images/assets/noimage.png')}}" alt="1flat" class='card-img-top w-100 rounded property_image object-fit-contain rounded-4 col-12' style="background-color: #4d4d4d">
                     @else
                         <img src={{asset($property->images[0]->image_url)}} alt="1flat" class='card-img-top w-100 rounded property_image object-fit-cover rounded-4 col-12'>
                     @endif
-                    
+                    </a>
                     <div class="card-body d-flex flex-column px-0">
-                        <h5 class="card-title text-start"><b>{{$property->title}}</b></h5>
+                        <a href="{{route('properties.show',['property'=>$property->id])}}" class="text-black">
+                            <h5 class="card-title text-start"><b>{{$property->title}}</b></h5>
+                        </a>
                         <p class="card-text text-start property-desc">{{$property->description}}</p>
                     </div>
                     <div class="border-0 p-0 d-flex justify-content-end">

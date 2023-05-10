@@ -149,6 +149,10 @@ class PropertiesController extends Controller
         //
         $property_o=Property::find($property);
 
+        if(empty($property_o)){
+            return redirect('properties.index');
+        }
+
         return view('properties.show',['property'=>$property_o]);
     }
 
