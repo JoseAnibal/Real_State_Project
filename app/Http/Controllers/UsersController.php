@@ -5,6 +5,7 @@ namespace App\Http\Controllers;
 use Illuminate\Http\Request;
 use App\Models\User;
 use Illuminate\Support\Facades\Hash;
+use Illuminate\Support\Facades\Storage;
 
 class UsersController extends Controller
 {
@@ -61,10 +62,11 @@ class UsersController extends Controller
         $request->validate([
             'email'=>'unique:users,email,'.$user.'| max:100 | email:rfc,dns',
             'name'=>'string',
-            'password'=>'min:3',
             'phone'=>'numeric | unique:users,phone,'.$user,
             'type'=>'required | numeric'
         ]);
+
+        // dd($request);
 
         $user_o->email=$request->email;
         $user_o->name=$request->name;
@@ -84,7 +86,11 @@ class UsersController extends Controller
 
             //DELETE IMAGE FROM LOCAL
             if(!empty($user_o->image)){
-                unlink(public_path($user_o->image));
+
+                if(file_exists(public_path($user_o->image))){
+                    unlink(public_path($user_o->image));
+                }
+                
             }
 
             $image_name=$user_o->id.'_'.md5(rand(1000,2000));
@@ -100,7 +106,6 @@ class UsersController extends Controller
             }
         }
         $user_o->save();
-        // dd($user_o);
 
         return redirect()->route('users.index')->with('success','Usuario editado correctamente!👌');
 
