@@ -16,15 +16,15 @@ return new class extends Migration
         Schema::create('properties', function (Blueprint $table) {
             $table->id();
             $table->foreignId('user_id')->nullable()->constrained('users');
-            $table->string('title',100)->unique();
-            $table->string('description');
-            $table->string('adress');
+            $table->text('title')->unique();
+            $table->text('description');
+            $table->text('adress');
             $table->integer('m2');
             $table->integer('type');
             $table->integer('rooms')->nullable();
             $table->integer('baths')->nullable();
             $table->double('price');
-            $table->string('coordinates');
+            $table->text('coordinates');
             $table->integer('status');
         });
     }

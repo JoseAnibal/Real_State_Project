@@ -4,6 +4,7 @@ body{
     flex-direction:column;
     min-height:100vh;
     justify-content: center;
+    font-family: "Inter", sans-serif;
 }
 
 main{
@@ -149,11 +150,45 @@ a{
 }
 
 #imagesfield{
-  margin-left: calc(-50vw + 50%);
-  width: 100vw;
+  
 }
 
 .miniimage{
   width: 7rem;
   height: 5rem;
+}
+
+.scroll-container {
+  width: 100%;
+  overflow-x: scroll;
+  overflow-y: hidden;
+  white-space: nowrap;
+  -ms-overflow-style: none;  /* IE 10+ */
+  scrollbar-width: none;  /* Firefox */
+  /* cursor: grab;
+  cursor: -webkit-grab; */
+}
+
+.scroll-container:active{
+  cursor: grabbing;
+  cursor: -webkit-grabbing;
+}
+
+.scroll-container::-webkit-scrollbar {
+  display: none; /* Safari and Chrome */
+}
+
+.scroll-content {
+  display: inline-block;
+}
+
+.selectedimg{
+  border: 3px solid #0074ff;
+  -webkit-box-shadow: 0px 0px 5px 0px rgba(0,115,255,1);
+  -moz-box-shadow: 0px 0px 5px 0px rgba(0,115,255,1);
+  box-shadow: 0px 0px 5px 0px rgba(0,115,255,1);
+}
+
+td{
+  background-color: #F3F3F3;
 }

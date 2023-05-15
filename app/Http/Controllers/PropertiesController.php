@@ -54,9 +54,9 @@ class PropertiesController extends Controller
         //     'status'=>'required'
         // ]);
         $rules = [
-            'title'=>'required|unique:properties,title|max:100',
-            'description'=>'required|max:255',
-            'adress'=>'required|max:255',
+            'title'=>'required|unique:properties,title|max:150',
+            'description'=>'required|max:500',
+            'adress'=>'required|max:300',
             'm2'=>'required|numeric|min:1',
             'type'=>'required',
             'price'=>'required|numeric|min:1',
@@ -153,7 +153,7 @@ class PropertiesController extends Controller
             return redirect('properties.index');
         }
 
-        return view('properties.show',['property'=>$property_o]);
+        return view('properties.show',['property'=>$property_o,'js'=>asset("js/Properties/show_property.js")]);
     }
 
     /**
@@ -260,7 +260,7 @@ class PropertiesController extends Controller
 
         $rules = [
             'title'=>'required|unique:properties,title,'.$property.'| max:100',
-            'description'=>'required|max:255',
+            'description'=>'required|max:500',
             'adress'=>'required|max:255',
             'm2'=>'required|numeric|min:1',
             'price'=>'required|numeric|min:1',

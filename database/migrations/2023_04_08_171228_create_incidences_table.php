@@ -17,7 +17,7 @@ return new class extends Migration
             $table->date('date');
             $table->integer('status');
             $table->string('title',50);
-            $table->string('description',150);
+            $table->text('description');
             $table->string('image_url')->nullable();
             
         });
