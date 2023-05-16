@@ -1,6 +1,55 @@
 "use strict"
 
 document.addEventListener("DOMContentLoaded", function() {
+      
+      async function initMap() {
+        const url=window.location.href;
+        const idproperty=url.split("/")[4];
+
+        const respuesta=await fetch('http://127.0.0.1:8000/api/get_coords/'+idproperty,{
+                method: 'GET'
+        });
+
+        const datos=await respuesta.json();
+
+        if(respuesta.ok){
+
+            let lati=parseFloat(datos.coords.split(',')[0]);
+            let long=parseFloat(datos.coords.split(',')[1]);
+
+            const citymap = {
+                property: {
+                  center: { lat: lati, lng: long },
+                  population: 1,
+                }
+            };
+    
+            // Create the map.
+            const map = new google.maps.Map(document.getElementById("map"), {
+              zoom: 17,
+              center: { lat: lati, lng: long }
+            });
+          
+            // Construct the circle for each value in citymap.
+            // Note: We scale the area of the circle based on the population.
+            for (const city in citymap) {
+              // Add the circle for this city to the map.
+              const cityCircle = new google.maps.Circle({
+                strokeColor: "#0074ff",
+                strokeOpacity: 0.4,
+                strokeWeight: 2,
+                fillColor: "#0074ff",
+                fillOpacity: 0.35,
+                map,
+                center: citymap[city].center,
+                radius: Math.sqrt(citymap[city].population) * 100,
+              });
+            }
+        }
+
+      }
+      
+      window.initMap = initMap();
 
     const contenedor = document.querySelector('.withscroll');
     let isMouseDown = false;
@@ -49,6 +98,5 @@ document.addEventListener("DOMContentLoaded", function() {
             e.classList.add('selectedimg');
         });
     });
-
 
 });

@@ -43,16 +43,7 @@ class PropertiesController extends Controller
      * @return \Illuminate\Http\Response
      */
     public function store(Request $request){
-        // $request->validate([
-        //     'title'=>'required|unique:properties,title',
-        //     'description'=>'required',
-        //     'adress'=>'required',
-        //     'm2'=>'required|numeric|min:1',
-        //     'type'=>'required',
-        //     'price'=>'required|numeric|min:1',
-        //     'coordinates'=>'required',
-        //     'status'=>'required'
-        // ]);
+
         $rules = [
             'title'=>'required|unique:properties,title|max:150',
             'description'=>'required|max:500',
@@ -314,5 +305,16 @@ class PropertiesController extends Controller
 
         return redirect()->route('properties.index')->with('success','Propiedad eliminada!🤯');
 
+    }
+
+    public function coordsProperty($property){
+        
+        $property_o=Property::find($property);
+
+        if(empty($property_o)){
+            return response()->json(['error' => 'Propiedad no encontrada']);
+        }
+
+        return response()->json(['coords' => $property_o->coordinates]);
     }
 }
