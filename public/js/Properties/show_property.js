@@ -14,8 +14,9 @@ document.addEventListener("DOMContentLoaded", function() {
 
         if(respuesta.ok){
 
-            let lati=parseFloat(datos.coords.split(',')[0]);
-            let long=parseFloat(datos.coords.split(',')[1]);
+            //MAKE THE POSITION OF THE CIRCLE A BIT RANDOM
+            let lati=parseFloat(datos.coords.split(',')[0])+(Math.random() * 0.0005 - 0.0000) + 0.0000;
+            let long=parseFloat(datos.coords.split(',')[1])-(Math.random() * 0.0006 - 0.0000) + 0.0000;
 
             const citymap = {
                 property: {

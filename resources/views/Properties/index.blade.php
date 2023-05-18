@@ -1,7 +1,7 @@
 @extends('app')
 
 @section('content')
-<div class="container d-flex flex-column align-items-center justify-content-center">
+<div class="container d-flex flex-column align-items-center gap-3">
 
     @if (session('success'))
         <div class="alert alert-success" role="alert">{{session('success')}}</div>

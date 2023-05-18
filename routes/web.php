@@ -34,17 +34,24 @@ Route::post('/users',[UsersController::class,'store'])->name('user_added');
 
 Route::get('/home',[HomeController::class,'index'])->name('home');
 
-//ROUTES FOR PROPERTIES
-Route::resource('properties',PropertiesController::class);
-
-//ROUTES FOR USERS
-Route::resource('users',UsersController::class);
-
 //ROUTES FOR LOGIN/LOGOUT
-Route::get('/loginform',[AuthController::class,'showLoginForm'])->name('loginform');
-Route::post('/login',[AuthController::class,'login'])->name('login');
+Route::get('/login',[AuthController::class,'showLoginForm'])->name('login');
+Route::post('/login',[AuthController::class,'login'])->name('loginin');
+Route::post('/register',[AuthController::class,'registerUser']);
 Route::post('/logout',[AuthController::class,'logout'])->name('logout');
+Route::get('/register',[AuthController::class,'registerView'])->name('register');
 
+//ROUTES FROM LOGGED USERS
 Route::middleware(['auth'])->group(function () {
-    //AQUI SE SUPONE QUE PONGO LAS RUTAS EN LAS QUE EL USUARIO DEBE ESTAR AUTORIZADO
+
+    //ROUTES FOR ADMINS
+    Route::group(['middleware' => 'admin'], function () {
+        
+        //ROUTES FOR PROPERTIES
+        Route::resource('properties',PropertiesController::class);
+        
+        //ROUTES FOR USERS
+        Route::resource('users',UsersController::class);
+    });
+
 });

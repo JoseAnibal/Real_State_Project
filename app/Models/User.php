@@ -16,6 +16,10 @@ class User extends Model implements AuthenticatableContract
 
     public $timestamps = false;
 
+    public function isAdmin(){
+        return $this->type == 3;
+    }
+
     public function favs(){
         return $this->hasMany(Fav::class);
     }

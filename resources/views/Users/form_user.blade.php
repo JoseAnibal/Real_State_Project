@@ -4,8 +4,8 @@
     <div class="container w-25 border p-4 mt-4">
         <form action="{{route('user_added')}}" method="POST">
             @csrf
-            @if (session('Exito'))
-                <div class="alert alert-success" role="alert">{{session('Exito')}}</div>
+            @if (session('success'))
+                <div class="alert alert-success" role="alert">{{session('success')}}</div>
             @endif
 
             @php

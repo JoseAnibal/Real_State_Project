@@ -192,3 +192,24 @@ a{
 td{
   background-color: #F3F3F3;
 }
+
+.buttonfadelight{
+  background: linear-gradient(90deg, #2ac0ee 0%, #0074ff 100%);
+}
+
+.alert{
+  border-radius: 10rem !important;
+  border: none;
+}
+
+.alert-danger{
+  background: #fdd !important;
+}
+
+.alert-success{
+  background: #68ffcd !important;
+}
+
+.alert-warning{
+  background: #ffe679 !important;
+}

@@ -68,7 +68,7 @@
           </ul>
         </div>
         <div class="loginbtn">
-          <form action="{{route('loginform')}}" method="get">
+          <form action="{{route('loginin')}}" method="get">
             <button type="submit" class="rounded-4 border-0 p-2"><i class="fa-solid fa-user me-1" style="color: #0070f0;"></i> Iniciar sesión</button>
           </form>
         </div>

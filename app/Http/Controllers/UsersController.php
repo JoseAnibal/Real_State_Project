@@ -29,7 +29,7 @@ class UsersController extends Controller
 
         $user->save();
 
-        return redirect()->route('user_added')->with('Exito','Usuario insertado correctamente!😀');
+        return redirect()->route('user_added')->with('success','Usuario insertado correctamente!😀');
     }
 
     public function index(){
