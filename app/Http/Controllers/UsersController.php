@@ -4,39 +4,17 @@ namespace App\Http\Controllers;
 
 use Illuminate\Http\Request;
 use App\Models\User;
+use Illuminate\Support\Facades\DB;
 use Illuminate\Support\Facades\Hash;
 use Illuminate\Support\Facades\Storage;
 
 class UsersController extends Controller
 {
-    //Request para saber que tipo de dato es
-    public function store(Request $request){
-        $request->validate([
-            'email'=>'required|unique:users,email|email:rfc,dns',
-            'name'=>'required',
-            'password'=>'required',
-            'phone'=>'required',
-            'type'=>'required'
-        ]);
-
-        $user=new User;
-        $user->email=$request->email;
-        $user->name=$request->name;
-        $user->password=Hash::make($request->password);
-        $user->phone=$request->phone;
-        $user->image=$request->image;
-        $user->type=$request->type;
-
-        $user->save();
-
-        return redirect()->route('user_added')->with('success','Usuario insertado correctamente!😀');
-    }
 
     public function index(){
-        //GET ALL USERS EXCEPT ADMINS
-        $users= User::where('type','!=',3)->get();
+        // $users= User::where('type','!=',3)->take(5)->get();
 
-        return view('users.index',['users'=>$users]);
+        return view('users.index',['js'=>asset("js/Users/index_user.js")]);
     }
 
     public function show($user){
@@ -54,19 +32,44 @@ class UsersController extends Controller
 
         //PASAR EL JAVASCRIPT PARA EL USUARIO
         return view('users.edit',['user'=>$user_o, 'js'=>asset("js/Users/create_user.js")]);
+    }
 
+    public function store(Request $request){
+        $request->validate([
+            'email'=>'required|unique:users,email|email:rfc,dns',
+            'name'=>'required',
+            'password'=>'required',
+            'phone'=>'required',
+            'type'=>'required'
+        ]);
+
+        $user=new User;
+        $user->email=$request->email;
+        $user->name=$request->name;
+        $user->password=Hash::make($request->password);
+        if(!empty($request->image)){
+            $user->image=$request->image;
+        }else{
+            $user->image='Images/assets/noimage.png';
+        }
+        $user->phone=$request->phone;
+        $user->type=$request->type;
+
+        $user->save();
+
+        return redirect()->route('user_added')->with('success','Usuario insertado correctamente!😀');
     }
 
     public function update(Request $request, $user){
         $user_o=User::find($user);
+
         $request->validate([
             'email'=>'unique:users,email,'.$user.'| max:100 | email:rfc,dns',
             'name'=>'string',
-            'phone'=>'numeric | unique:users,phone,'.$user,
-            'type'=>'required | numeric'
+            'phone'=>'nullable| numeric ',
+            'type'=>'required | numeric',
+            'password'=>'nullable | min:4'
         ]);
-
-        // dd($request);
 
         $user_o->email=$request->email;
         $user_o->name=$request->name;
@@ -78,9 +81,8 @@ class UsersController extends Controller
         $user_o->phone=$request->phone;
         $user_o->type=$request->type;
 
-        // MULTIPLE IMAGES PICKER AND VALIDATION
+        //VALIDATION
         $allowed=['png','jpg','jpeg','webp'];
-        $message='Imágen actualizada! 🌄';
 
         if($request->file('image')){
 
@@ -88,7 +90,9 @@ class UsersController extends Controller
             if(!empty($user_o->image)){
 
                 if(file_exists(public_path($user_o->image))){
-                    unlink(public_path($user_o->image));
+                    if(implode('/',array_slice(explode('/',asset($user_o->image)), -3))!='Images/assets/noimage.png'){
+                        unlink(public_path($user_o->image));
+                    }
                 }
                 
             }
@@ -117,5 +121,39 @@ class UsersController extends Controller
 
         return redirect()->route('users.index')->with('success','Usuario eliminado!🤯');
 
+    }
+
+    public function getUsers(Request $request){
+        $query='';
+        $data=[];
+
+        if(!empty($request->all())){
+            $query="SELECT * FROM users WHERE email LIKE ? AND phone LIKE ?";
+            
+            $data[]="$request->email%";
+            $data[]="$request->phone%";
+    
+            if($request->type!='all'){
+                $query.=" AND type LIKE ?";
+                $data[]=$request->type;
+            }
+    
+            $data[]=intval($request->offset)*5;
+            $query.=" LIMIT 6 OFFSET ?";
+        }else{
+            $query="SELECT * FROM users WHERE type != 3 LIMIT 6";
+        }
+
+        $users=DB::select($query, [...$data]);
+
+        return response()->json(['users' => $users]);
+    }
+
+    public function deleteAPI(Request $request, $user){
+        
+        $user_o=User::find($user);
+        $user_o->delete();
+
+        return response()->json(['message' => 'Usuario eliminado correctamente!']);
     }
 }

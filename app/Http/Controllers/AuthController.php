@@ -59,10 +59,16 @@ class AuthController extends Controller
         $user->name=$request->name;
         $user->password=Hash::make($request->password);
         $user->type=0;
+        $user->phone='000000000';
+        if(!empty($request->image)){
+            $user->image=$request->image;
+        }else{
+            $user->image='Images/assets/noimage.png';
+        }
 
         $user->save();
 
-        return redirect()->route('home')->with('success','Usuario insertado correctamente!😀');
+        return redirect()->route('login')->with('success','Registrado correctamente. Inicie Sesión.');
     }
 
 

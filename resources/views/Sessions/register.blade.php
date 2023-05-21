@@ -31,7 +31,7 @@
 			</div>
 
 			<div class="mb-4">
-					<a href="{{route('login')}}">Iniciar sessión</a>
+					<a href="{{route('login')}}">Iniciar sesión</a>
 			</div>
 
 			<div>

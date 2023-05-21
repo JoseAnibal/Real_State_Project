@@ -7,8 +7,11 @@
 			@if ($errors->any())
 				{!! implode('', $errors->all("<div class='alert alert-danger' role='alert'>:message</div>")) !!}
 			@endif
+			@if (session('success'))
+				<div class="alert alert-success" role="alert">{{session('success')}}</div>
+			@endif
 		</div>
-		<div class="d-flex flex-column border rounded-4 col-10 col-md-4">
+		<div class="d-flex flex-column border rounded-4 col-10 col-md-4 logindiv">
 			<form method="POST" action="{{ route('login') }}" class="p-4">
 				@csrf
 				<div class="mb-4">
@@ -40,8 +43,6 @@
 						Iniciar Sesión
 					</button>
 				</div>
-				
-				
 			</form>
 		</div>
     
