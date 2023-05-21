@@ -73,6 +73,6 @@
                 </select>
             </div>
         </form>
-        <button class="btn btn-primary sendButton">Editar</button>
+        <button class="btn btn-primary sendButton borderfade rounded-5 col-12 border-0">Editar</button>
     </div>
 @endsection

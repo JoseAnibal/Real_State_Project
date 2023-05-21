@@ -33,6 +33,6 @@ Route::post('get_users',[UsersController::class,'getUsers']);
 
 Route::post('delete_user/{user}',[UsersController::class,'deleteAPI']);
 
-Route::post('get_property',[PropertiesController::class,'getProperties']);
+Route::post('get_properties',[PropertiesController::class,'getProperties']);
 
 Route::post('delete_property/{property}',[PropertiesController::class,'deletePAPI']);

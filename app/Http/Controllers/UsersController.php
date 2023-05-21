@@ -126,6 +126,7 @@ class UsersController extends Controller
     public function getUsers(Request $request){
         $query='';
         $data=[];
+        $limit=6;
 
         if(!empty($request->all())){
             $query="SELECT * FROM users WHERE email LIKE ? AND phone LIKE ?";
@@ -137,11 +138,12 @@ class UsersController extends Controller
                 $query.=" AND type LIKE ?";
                 $data[]=$request->type;
             }
-    
-            $data[]=intval($request->offset)*5;
-            $query.=" LIMIT 6 OFFSET ?";
+            
+            $data[]=intval($request->offset)*$limit;
+
+            $query.=" AND type != 3 LIMIT $limit OFFSET ?";
         }else{
-            $query="SELECT * FROM users WHERE type != 3 LIMIT 6";
+            $query="SELECT * FROM users WHERE type != 3 LIMIT $limit";
         }
 
         $users=DB::select($query, [...$data]);
@@ -152,6 +154,13 @@ class UsersController extends Controller
     public function deleteAPI(Request $request, $user){
         
         $user_o=User::find($user);
+
+        if(file_exists(public_path($user_o->image))){
+            if(implode('/',array_slice(explode('/',asset($user_o->image)), -3))!='Images/assets/noimage.png'){
+                unlink(public_path($user_o->image));
+            }
+        }
+        
         $user_o->delete();
 
         return response()->json(['message' => 'Usuario eliminado correctamente!']);

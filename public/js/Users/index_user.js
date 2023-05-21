@@ -10,6 +10,7 @@ initData();
 const filterbtn=document.querySelector('.filter');
 filterbtn.addEventListener('click', ()=>{
     userscontainer.innerHTML='';
+    click=0;
     initData();
 });
 
@@ -86,7 +87,7 @@ async function initData(){
                     <img src="${urlweb}/Images/assets/empty.png" alt="1flat" class='rounded user_image object-fit-contain rounded-4' style="width:8rem;background-color: #F3F3F3">
                 </div>
                 <div>
-                    <h5>No hay Usuarios disponibles</h5>
+                    <h5>No se han encontrado usuarios con esos filtros.</h5>
                 </div>
             
             </div>`;
@@ -174,14 +175,14 @@ function showAlert(message, type) {
     // Crear un nuevo elemento de alerta
     const alert = document.createElement('div');
     alert.classList.add('alert', `alert-${type}`, 'fade', 'show');
-    
+
     // Agregar el mensaje a la alerta
     alert.innerText = message;
-    
+
     // Agregar la alerta al documento
     const container = document.querySelector('.container');
     container.insertBefore(alert, container.firstChild);
-    
+
     // hide la alerta después de 3 segundos
     setTimeout(function() {
         alert.classList.remove('show');
@@ -195,5 +196,5 @@ function showAlert(message, type) {
         top: 0,
         left: 0,
         behavior: 'smooth'
-      });
-    }
+        });
+}

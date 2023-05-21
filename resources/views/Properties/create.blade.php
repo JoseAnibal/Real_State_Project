@@ -68,6 +68,6 @@
                 </select>
             </div>
         </form>
-        <button class="btn btn-primary sendButton">Crear</button>
+        <button class="btn btn-primary sendButton borderfade col-12 border-0 rounded-5">Crear</button>
     </div>
 @endsection

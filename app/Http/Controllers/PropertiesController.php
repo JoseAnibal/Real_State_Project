@@ -7,7 +7,9 @@ use App\Models\Image;
 use App\Models\GeneralFunction;
 use Illuminate\Http\Request;
 use Illuminate\Mail\Mailables\Content;
+use Illuminate\Support\Facades\DB;
 use Illuminate\Support\Facades\Storage;
+use stdClass;
 
 use function PHPSTORM_META\map;
 
@@ -19,9 +21,9 @@ class PropertiesController extends Controller
      * @return \Illuminate\Http\Response
      */
     public function index(){
-        $properties= Property::all();
+        // $properties= Property::all();
 
-        return view('properties.index',['properties'=>$properties]);
+        return view('properties.index',['js'=>asset("js/Properties/index_property.js")]);
     }
 
     /**
@@ -316,5 +318,54 @@ class PropertiesController extends Controller
         }
 
         return response()->json(['coords' => $property_o->coordinates]);
+    }
+
+    public function getProperties(Request $request){
+        $query='';
+        $data=[];
+        $limit=4;
+
+        if(!empty($request->all())){
+            $query="SELECT * FROM properties WHERE title LIKE ? AND adress LIKE ?";
+            
+            $data[]="$request->title%";
+            $data[]="$request->adress%";
+    
+            if($request->type!='all'){
+                $query.=" AND type LIKE ?";
+                $data[]=$request->type;
+            }
+            
+            $data[]=intval($request->offset)*$limit;
+            $query.=" LIMIT $limit OFFSET ?";
+        }else{
+            $query="SELECT * FROM properties LIMIT $limit";
+        }
+
+        $properties=DB::select($query, [...$data]);
+
+        foreach($properties as $property){
+            $image=DB::select("SELECT image_url FROM images  WHERE property_id = $property->id");
+
+            $property_new=new stdClass();
+            $property_new=$property;
+            $property_new->image=$image[0]->image_url;
+        }
+
+        return response()->json(['properties' => $properties]);
+    }
+
+    public function deletePAPI($property){
+
+        $property_o=Property::find($property);
+
+        foreach(($property_o->images)->toArray() as $image){
+            unlink(public_path($image['image_url']));
+        }
+
+        $property_o->images()->delete();
+        $property_o->delete();
+
+        return response()->json(['message' => 'Propiedad eliminada correctamente!']);
     }
 }
