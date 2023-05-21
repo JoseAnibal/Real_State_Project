@@ -3,6 +3,8 @@
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Route;
 use App\Http\Controllers\PropertiesController;
+use App\Http\Controllers\UsersController;
+use Illuminate\Contracts\Auth\UserProvider;
 
 /*
 |--------------------------------------------------------------------------
@@ -26,3 +28,11 @@ Route::patch('update_property/{property}',[PropertiesController::class,'updateAp
 Route::post('upload_images/{property}',[PropertiesController::class,'uploadImages']);
 
 Route::get('get_coords/{property}',[PropertiesController::class,'coordsProperty']);
+
+Route::post('get_users',[UsersController::class,'getUsers']);
+
+Route::post('delete_user/{user}',[UsersController::class,'deleteAPI']);
+
+Route::post('get_property',[PropertiesController::class,'getProperties']);
+
+Route::post('delete_property/{property}',[PropertiesController::class,'deletePAPI']);

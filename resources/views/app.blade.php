@@ -220,7 +220,7 @@
           <div class="col-lg-3 col-md-6 mb-4 mb-md-0">
   
             <div class="rounded-circle bg-white shadow-1-strong d-flex align-items-center justify-content-center mb-4 mx-auto" style="width: 150px; height: 150px;">
-              <img src={{asset("Images/assets/logo.png")}} class="object-fit-cover rounded-circle w-100 h-100" alt=""
+              <img src="{{asset("Images/assets/logo.png")}}" class="object-fit-cover rounded-circle w-100 h-100" alt=""
                    loading="lazy" />
             </div>
   
