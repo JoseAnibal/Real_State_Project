@@ -52,6 +52,9 @@ Route::middleware(['auth'])->group(function () {
         
         //ROUTES FOR USERS
         Route::resource('users',UsersController::class);
+        Route::post('/add_user/{property}',[PropertiesController::class,'addUser'])->name('properties.adduser');
+        Route::post('/delete_user/{property}',[PropertiesController::class,'deleteUser'])->name('properties.deleteuser');
+
     });
 
 });

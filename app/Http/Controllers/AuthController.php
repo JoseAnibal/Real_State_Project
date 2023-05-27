@@ -26,13 +26,13 @@ class AuthController extends Controller
 
             if (Auth::user()->type == 3) {
                 $request->session()->put('admin', true);
-                return redirect('properties.index');
+                return redirect()->route('properties.index');
             }else{
                 $request->session()->put('admin', false);
                 $request->session()->put('user', $request->email);
             }
             // dd($request->session()->get('admin', false));
-            return redirect('home');
+            return redirect()->route('home');
         }
 
         return back()->withErrors([
@@ -79,6 +79,6 @@ class AuthController extends Controller
 
         $request->session()->regenerateToken();
 
-        return redirect('/');
+        return redirect()->route('home');
     }
 }

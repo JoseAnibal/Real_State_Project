@@ -116,8 +116,26 @@
                             M2
                         </div>
                     </div>
-                    
+                </div>
 
+                <div id="propertymanager" class="col-11">
+                    <h5 class="bold">Datos propiedad</h5>
+                    <div class="d-flex flex-column gap-3 border rounded-4 col-12 w-100 py-3">
+                        <form action="{{route('properties.adduser', ['property'=>$property->id])}}" method="post">
+                            @csrf
+                            <button type="submit" class="col-10 btn borderfade text-white border-0 rounded-5"><i class="fa-solid fa-user" style="color: #ffffff;"></i> Usuarios</button>
+                        </form>
+
+                        <form action="" method="post">
+                            @csrf
+                            <button type="submit" class="col-10 btn borderfade text-white border-0 rounded-5"><i class="fa-solid fa-file-invoice" style="color: #ffffff;"></i> Facturas</button>
+                        </form>
+
+                        <form action="" method="post">
+                            @csrf
+                            <button type="submit" class="col-10 btn borderfade text-white border-0 rounded-5"><i class="fa-solid fa-triangle-exclamation" style="color: #ffffff;"></i> Incidencias</button>
+                        </form>
+                    </div>
                 </div>
             </section>
         </section>

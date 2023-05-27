@@ -93,7 +93,8 @@ main{
   }
   .lds-ripple div {
     position: absolute;
-    border: 8px solid #21cea3;
+    border: 0px solid;
+    background: linear-gradient(90deg, #00fad0 0%, #00aeff 100%);
     opacity: 1;
     border-radius: 50%;
     animation: lds-ripple 1s cubic-bezier(0, 0.2, 0.8, 1) infinite;

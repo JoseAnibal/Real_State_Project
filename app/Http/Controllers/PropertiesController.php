@@ -5,6 +5,7 @@ namespace App\Http\Controllers;
 use App\Models\Property;
 use App\Models\Image;
 use App\Models\GeneralFunction;
+use App\Models\User;
 use Illuminate\Http\Request;
 use Illuminate\Mail\Mailables\Content;
 use Illuminate\Support\Facades\DB;
@@ -143,7 +144,7 @@ class PropertiesController extends Controller
         $property_o=Property::find($property);
 
         if(empty($property_o)){
-            return redirect('properties.index');
+            return redirect()->route('properties.index');
         }
 
         return view('properties.show',['property'=>$property_o,'js'=>asset("js/Properties/show_property.js")]);
@@ -307,6 +308,23 @@ class PropertiesController extends Controller
 
         return redirect()->route('properties.index')->with('success','Propiedad eliminada!🤯');
 
+    }
+
+    public function addUser(Request $request,$property){
+        // dd($property);
+        $property_o=Property::find($property);
+        //Ver todos los usuarios que hya dentro de una propiedad
+        // foreach ($property->rentals as $rental) {
+        //     dump($rental->user->toArray());
+        // }
+        $users=[];
+
+        $rentals=$property_o->rentals;
+        foreach($rentals as $rental){
+            $users[]=$rental->user;
+        }
+
+        return view('properties.userlistadd',['users'=>$users,'js'=>asset("js/Properties/usermanage.js")]);
     }
 
     public function coordsProperty($property){

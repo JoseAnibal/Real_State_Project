@@ -17,6 +17,7 @@ return new class extends Migration
             $table->foreignId('property_id')->constrained('properties');
             $table->date('date_start');
             $table->date('date_end');
+            $table->boolean('active');
         });
     }
 

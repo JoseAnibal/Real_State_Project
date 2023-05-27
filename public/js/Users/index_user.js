@@ -1,6 +1,7 @@
 "use strict"
 const userscontainer=document.querySelector('#userscontainer');
 const cargando=document.querySelector(".cargando");
+const viewmore=document.querySelector('.viewmore');
 let urlweb=(window.location.href).split('/').slice(0,3).join('/');
 let click=0;
 
@@ -79,9 +80,10 @@ async function initData(){
     
                 });
             });
+            viewmore.classList.remove('hide');
         }else{
             userscontainer.innerHTML=`
-            <div class='d-flex col-10 rounded-4 bg-graylight flex-column h-100 justify-content-center align-items-center h-100'>
+            <div class='d-flex col-10 rounded-4 bg-graylight flex-column h-100 w-100 justify-content-center align-items-center h-100'>
             
                 <div class="p-3">
                     <img src="${urlweb}/Images/assets/empty.png" alt="1flat" class='rounded user_image object-fit-contain rounded-4' style="width:8rem;background-color: #F3F3F3">
@@ -91,6 +93,7 @@ async function initData(){
                 </div>
             
             </div>`;
+            viewmore.classList.add('hide');
         }
         cargando.classList.add('hide');
     }
@@ -122,7 +125,7 @@ function filterData(){
 
                 divchild.innerHTML=`
                         <div class="d-flex h-100">    
-                        <img src="${urlweb}/${e.image}" alt="1flat" class='rounded user_image object-fit-contain rounded-4 bg-graylight' style="width:6rem;">
+                            <img src="${urlweb}/${e.image}" alt="1flat" class='rounded user_image object-fit-contain rounded-4 bg-graylight' style="width:6rem;">
                         </div>
                         <div class="p-3 d-flex flex-column justify-content-between text-start">
                             <h5 class="m-0 text-wrap text-break"><b>Nombre:</b> ${e.name}</h5>
