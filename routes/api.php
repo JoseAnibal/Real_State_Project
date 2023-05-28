@@ -36,3 +36,7 @@ Route::post('delete_user/{user}',[UsersController::class,'deleteAPI']);
 Route::post('get_properties',[PropertiesController::class,'getProperties']);
 
 Route::post('delete_property/{property}',[PropertiesController::class,'deletePAPI']);
+
+Route::post('get_norental_users',[PropertiesController::class,'norentalUsers']);
+
+Route::post('process_rental/{property}',[PropertiesController::class,'processRental']);

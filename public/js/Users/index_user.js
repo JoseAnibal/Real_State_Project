@@ -5,8 +5,8 @@ const viewmore=document.querySelector('.viewmore');
 let urlweb=(window.location.href).split('/').slice(0,3).join('/');
 let click=0;
 
-filterData();
 initData();
+filterData();
 
 const filterbtn=document.querySelector('.filter');
 filterbtn.addEventListener('click', ()=>{

@@ -4,7 +4,9 @@ use App\Http\Controllers\AuthController;
 use App\Http\Controllers\HomeController;
 use Illuminate\Support\Facades\Route;
 use App\Http\Controllers\PropertiesController;
+use App\Http\Controllers\RentalsController;
 use App\Http\Controllers\UsersController;
+use App\Models\Rental;
 
 /*
 |--------------------------------------------------------------------------
@@ -52,8 +54,9 @@ Route::middleware(['auth'])->group(function () {
         
         //ROUTES FOR USERS
         Route::resource('users',UsersController::class);
-        Route::post('/add_user/{property}',[PropertiesController::class,'addUser'])->name('properties.adduser');
-        Route::post('/delete_user/{property}',[PropertiesController::class,'deleteUser'])->name('properties.deleteuser');
+        Route::get('/user_list/{property}',[PropertiesController::class,'userList'])->name('properties.userlist');
+        Route::post('/user_add/{property}',[PropertiesController::class,'userAdd'])->name('properties.useradd');
+        Route::resource('rentals',RentalsController::class);
 
     });
 

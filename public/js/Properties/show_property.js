@@ -71,21 +71,19 @@ document.addEventListener("DOMContentLoaded", function() {
         if (!isMouseDown) return;
         e.preventDefault();
         const x = e.pageX - contenedor.offsetLeft;
-        const walk = (x - startX) * 1; // Controla la velocidad del desplazamiento
+        const walk = (x - startX) * 1;
         contenedor.scrollLeft = scrollLeft - walk;
     });
 
     const clickable=document.querySelectorAll(".clickable");
     const carouselitem=document.querySelectorAll(".carousel-item");
 
-    //REMOVE DRAGGABLE IMAGE EVENT
     clickable.forEach((e,i)=>{
         e.addEventListener('dragstart',(el)=>{
             el.preventDefault();
         });
     });
 
-    //SET IMAGE ON CARROUSEL
     clickable.forEach((e,i)=>{
         e.addEventListener('click',(el)=>{
             carouselitem.forEach((e,i)=>{

@@ -154,25 +154,21 @@ document.addEventListener("DOMContentLoaded", function() {
 
             cargando.classList.add('hide');
             
-
         });
 
 
     }
 
     function showAlert(message, type) {
-        // Crear un nuevo elemento de alerta
+
         const alert = document.createElement('div');
         alert.classList.add('alert', `alert-${type}`, 'fade', 'show');
         
-        // Agregar el mensaje a la alerta
         alert.innerText = message;
         
-        // Agregar la alerta al documento
         const container = document.querySelector('.container');
         container.insertBefore(alert, container.firstChild);
         
-        // hide la alerta después de 3 segundos
         setTimeout(function() {
             alert.classList.remove('show');
             alert.classList.add('hide');

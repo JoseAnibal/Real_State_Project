@@ -2,12 +2,12 @@
 
 @section('content')
 
-
-
-    <section class="container my-3">
+    <section class="container my-3 d-flex flex-column gap-3">
         <div>
-            
-            <button type="submit" class="btn borderfade text-white border-0 rounded-5">Añadir usuarios</button>
+            <form action="{{route('properties.useradd',['property'=>$property])}}" method="POST">
+                @csrf
+                <button type="submit" class="btn borderfade text-white border-0 rounded-5">Añadir usuarios</button>
+            </form>
         </div>
         <div class="userlist d-flex justify-content-center align-items-center flex-wrap gap-2">
 
@@ -27,8 +27,8 @@
                         </button>
                         <ul class="dropdown-menu col-6">
                             <li>
-                                <form action="{{route('properties.deleteuser',['rental'])}}" method="get" class="dropdown-item px-0 col-8">
-                                    <button type="submit" class="btn col-12 px-0 border-0"><i class="fa-solid fa-circle-xmark"></i> Eliminar del piso</button>
+                                <form action="{{route('rentals.edit',['rental'=>$user->rental])}}" method="get" class="dropdown-item px-0 col-8">
+                                    <button type="submit" class="btn col-12 px-0 border-0"><i class="fa-solid fa-pen"></i> Editar Alquiler</button>
                                 </form>
                             </li>
                         </ul>

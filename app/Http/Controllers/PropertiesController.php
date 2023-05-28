@@ -5,6 +5,7 @@ namespace App\Http\Controllers;
 use App\Models\Property;
 use App\Models\Image;
 use App\Models\GeneralFunction;
+use App\Models\Rental;
 use App\Models\User;
 use Illuminate\Http\Request;
 use Illuminate\Mail\Mailables\Content;
@@ -123,6 +124,10 @@ class PropertiesController extends Controller
             // return redirect()->route('properties.index')->with('success',$message);
         }else{
             $message.=' (Sin imágenes)';
+            Image::create([
+                'property_id'=>$property->id,
+                'image_url'=>'Images/assets/noimage.png'
+            ]);
             return response()->json([
 
                 'message'=>$message
@@ -310,21 +315,46 @@ class PropertiesController extends Controller
 
     }
 
-    public function addUser(Request $request,$property){
-        // dd($property);
+    public function userList($property){
+
         $property_o=Property::find($property);
-        //Ver todos los usuarios que hya dentro de una propiedad
-        // foreach ($property->rentals as $rental) {
-        //     dump($rental->user->toArray());
-        // }
         $users=[];
 
         $rentals=$property_o->rentals;
         foreach($rentals as $rental){
-            $users[]=$rental->user;
+
+            if($rental->active){
+                $rental->user->rental=$rental->id;
+                $users[]=$rental->user;
+            }
+           
         }
 
-        return view('properties.userlistadd',['users'=>$users,'js'=>asset("js/Properties/usermanage.js")]);
+        // dd($users);
+
+        return view('properties.userlist',['property'=>$property,'users'=>$users]);
+    }
+
+    public function userAdd(Request $request, $property){
+
+        return view('properties.useradd',['js'=>asset("js/Properties/user_add.js")]);
+    }
+
+    public function userDelete(Request $request, $property){
+
+        // $request->
+
+        $property_o=Property::find($property);
+        $users=[];
+
+        $rentals=$property_o->rentals;
+        foreach($rentals as $rental){
+
+            if($rental->active)  $users[]=$rental->user;
+           
+        }
+
+        return view('properties.userlist',['property'=>$property,'users'=>$users]);
     }
 
     public function coordsProperty($property){
@@ -385,5 +415,50 @@ class PropertiesController extends Controller
         $property_o->delete();
 
         return response()->json(['message' => 'Propiedad eliminada correctamente!']);
+    }
+
+    public function norentalUsers(Request $request){
+        $query='';
+        $data=[];
+        $limit=2;
+
+        $query="SELECT
+                    * 
+                FROM
+                    users u 
+                WHERE
+                    (u.id NOT IN ( SELECT DISTINCT user_id FROM rentals ) 
+                    OR u.id IN ( SELECT DISTINCT user_id FROM rentals WHERE active = 0 ) )
+                    AND u.type = 1
+                    AND u.email LIKE ? 
+                    AND u.phone LIKE ?";
+        
+        $data[]="$request->email%";
+        $data[]="$request->phone%";
+        $data[]=intval($request->offset)*$limit;
+
+        $query.=" LIMIT $limit OFFSET ?";
+
+        $users=DB::select($query, [...$data]);
+
+        return response()->json(['users' => $users]);
+    }
+
+    public function processRental(Request $request, $property){
+        
+        $usersform = explode(',',$request->idusers);
+
+        foreach($usersform as $user){
+            $rental= new Rental();
+            $rental->user_id=$user;
+            $rental->property_id=$property;
+            $rental->date_start=$request->datestart;
+            $rental->date_end=$request->dateend;
+            $rental->active=1;
+
+            $rental->save();
+        }
+
+        return response()->json(['success'=>'Alquileres creados correctamente!']);
     }
 }

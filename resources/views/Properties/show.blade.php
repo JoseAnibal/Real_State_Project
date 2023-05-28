@@ -4,7 +4,7 @@
 
     <section class="container d-flex flex-column">
         <section class="d-flex flex-column justify-content-center align-items-center bg-body-secondary rounded-4" id="imagesfield">
-            <div id="carouselExample" class="carousel slide w-75">
+            <div id="carouselExample" class="carousel slide col-11">
                 <div class="carousel-inner">
                     @php
                         $first=true;
@@ -121,8 +121,7 @@
                 <div id="propertymanager" class="col-11">
                     <h5 class="bold">Datos propiedad</h5>
                     <div class="d-flex flex-column gap-3 border rounded-4 col-12 w-100 py-3">
-                        <form action="{{route('properties.adduser', ['property'=>$property->id])}}" method="post">
-                            @csrf
+                        <form action="{{route('properties.userlist', ['property'=>$property->id])}}" method="get">
                             <button type="submit" class="col-10 btn borderfade text-white border-0 rounded-5"><i class="fa-solid fa-user" style="color: #ffffff;"></i> Usuarios</button>
                         </form>
 
