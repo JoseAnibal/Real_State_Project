@@ -148,7 +148,13 @@ a {
     text-decoration: none;
 }
 
-#imagesfield {
+ul{
+    list-style-type: none;
+}
+
+.imageusernav{
+    width: 2.5rem;
+    height: 2.5rem;
 }
 
 .miniimage {

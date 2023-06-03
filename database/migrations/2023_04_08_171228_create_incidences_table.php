@@ -13,7 +13,7 @@ return new class extends Migration
     {
         Schema::create('incidences', function (Blueprint $table) {
             $table->id();
-            $table->foreignId('rental_id')->constrained('rentals');
+            $table->foreignId('property_id')->constrained('properties');
             $table->date('date');
             $table->integer('status');
             $table->string('title',50);

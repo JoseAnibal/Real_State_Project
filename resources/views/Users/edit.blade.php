@@ -60,7 +60,7 @@
                     <option value="3">Admin</option>
                 </select>
             </div>
-            <button class="btn btn-primary sendButton">Editar</button>
+            <button class="btn btn-primary sendButton borderfade rounded-5 border-0 w-100">Editar</button>
         </form>
         
     </div>

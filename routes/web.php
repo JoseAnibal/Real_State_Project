@@ -4,6 +4,7 @@ use App\Http\Controllers\AuthController;
 use App\Http\Controllers\HomeController;
 use Illuminate\Support\Facades\Route;
 use App\Http\Controllers\PropertiesController;
+use App\Http\Controllers\RegisteredController;
 use App\Http\Controllers\RentalsController;
 use App\Http\Controllers\UsersController;
 use App\Models\Rental;
@@ -58,6 +59,17 @@ Route::middleware(['auth'])->group(function () {
         Route::post('/user_add/{property}',[PropertiesController::class,'userAdd'])->name('properties.useradd');
         Route::resource('rentals',RentalsController::class);
 
+    });
+
+    Route::group(['middleware' => 'seller'], function () {
+        
+    });
+
+    Route::group(['middleware' => 'registered'], function () {
+        Route::get('/registered/{property}',[RegisteredController::class,'index'])->name('registered.index');
+        Route::get('/incidences/{property}',[RegisteredController::class,'showincidences'])->name('registered.showincidences');
+        Route::get('/incidences/create/{property}',[RegisteredController::class,'createincidence'])->name('registered.createincidence');
+        Route::post('/incidences/store',[RegisteredController::class,'storeincidence'])->name('registered.storeincidence');
     });
 
 });

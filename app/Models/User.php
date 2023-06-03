@@ -20,11 +20,19 @@ class User extends Model implements AuthenticatableContract
         return $this->type == 3;
     }
 
+    public function isSeller(){
+        return $this->type == 2;
+    }
+
+    public function isRegistered(){
+        return $this->type == 1;
+    }
+
     public function favs(){
         return $this->hasMany(Fav::class);
     }
 
     public function rental(){
-        return $this->hasOne(Rental::class);
+        return $this->hasMany(Rental::class);
     }
 }
