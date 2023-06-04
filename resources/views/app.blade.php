@@ -189,7 +189,7 @@
 						<a class="nav-link" href="{{route('users.index')}}">Usuarios</a>
 					</li>
 					<li class="nav-item">
-						<a class="nav-link" href="#">Incidencias</a>
+						<a class="nav-link" href="{{route('incidences.index')}}">Incidencias</a>
 					</li>
 					<li class="nav-item">
 						<a class="nav-link" href="#">Facturas</a>

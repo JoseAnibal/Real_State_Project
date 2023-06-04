@@ -2,6 +2,7 @@
 
 use App\Http\Controllers\AuthController;
 use App\Http\Controllers\HomeController;
+use App\Http\Controllers\IncidencesController;
 use Illuminate\Support\Facades\Route;
 use App\Http\Controllers\PropertiesController;
 use App\Http\Controllers\RegisteredController;
@@ -52,6 +53,11 @@ Route::middleware(['auth'])->group(function () {
         
         //ROUTES FOR PROPERTIES
         Route::resource('properties',PropertiesController::class);
+
+        //ROUTES FOR INCIDENCES
+        Route::resource('incidences',IncidencesController::class);
+
+        Route::get('/showincidencesadmin/{property}',[PropertiesController::class,'showincidencesadmin'])->name('registered.showincidencesadmin');
         
         //ROUTES FOR USERS
         Route::resource('users',UsersController::class);
@@ -67,7 +73,7 @@ Route::middleware(['auth'])->group(function () {
 
     Route::group(['middleware' => 'registered'], function () {
         Route::get('/registered/{property}',[RegisteredController::class,'index'])->name('registered.index');
-        Route::get('/incidences/{property}',[RegisteredController::class,'showincidences'])->name('registered.showincidences');
+        Route::get('/showincidences/{property}',[RegisteredController::class,'showincidences'])->name('registered.showincidences');
         Route::get('/incidences/create/{property}',[RegisteredController::class,'createincidence'])->name('registered.createincidence');
         Route::post('/incidences/store',[RegisteredController::class,'storeincidence'])->name('registered.storeincidence');
     });

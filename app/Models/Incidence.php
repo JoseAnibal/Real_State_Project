@@ -10,7 +10,7 @@ class Incidence extends Model
     use HasFactory;
     public $timestamps = false;
 
-    public function rental(){
+    public function property(){
         return $this->belongsTo(Property::class);
     }
 }

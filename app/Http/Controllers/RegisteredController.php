@@ -85,8 +85,14 @@ class RegisteredController extends Controller
         }
 
         $property_o= Property::find($property);
+        $status=[
+            0=>"<i class='fa-regular fa-circle fa-lg' style='color: #7ceef8;'></i> Creada",
+            1=>"<i class='fa-solid fa-spinner fa-lg' style='color: #fbcf7d;'></i> En curso",
+            2=>"<i class='fa-solid fa-xmark fa-xl' style='color: #fe8386;'></i> Rechazada",
+            3=>"<i class='fa-solid fa-check fa-xl' style='color: #80ff86;'></i> Finalizada"
+        ];
         
-        return view('incidences.index',['incidences'=>$property_o->incidences]);
+        return view('incidences.index',['incidences'=>$property_o->incidences,'status'=>$status]);
     }
 
     public function createincidence($property){

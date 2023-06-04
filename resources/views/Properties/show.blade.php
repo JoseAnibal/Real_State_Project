@@ -130,7 +130,7 @@
                             <button type="submit" class="col-10 btn borderfade text-white border-0 rounded-5"><i class="fa-solid fa-file-invoice" style="color: #ffffff;"></i> Facturas</button>
                         </form>
 
-                        <form action="" method="post">
+                        <form action="{{route('registered.showincidencesadmin',['property'=>$property->id])}}" method="get">
                             @csrf
                             <button type="submit" class="col-10 btn borderfade text-white border-0 rounded-5"><i class="fa-solid fa-triangle-exclamation" style="color: #ffffff;"></i> Incidencias</button>
                         </form>

@@ -1,5 +1,6 @@
 <?php
 
+use App\Http\Controllers\IncidencesController;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Route;
 use App\Http\Controllers\PropertiesController;
@@ -40,3 +41,5 @@ Route::post('delete_property/{property}',[PropertiesController::class,'deletePAP
 Route::post('get_norental_users',[PropertiesController::class,'norentalUsers']);
 
 Route::post('process_rental/{property}',[PropertiesController::class,'processRental']);
+
+Route::post('get_incidences',[IncidencesController::class,'getIncidences']);
