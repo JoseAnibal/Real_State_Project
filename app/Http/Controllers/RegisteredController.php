@@ -165,6 +165,8 @@ class RegisteredController extends Controller
         return redirect()->route('registered.index',['property'=>session()->get('property',false)])->with('success','Incidencia creada correctamente');
     }
 
+    // HACER VER FACTURAS
+
     /**
      * Display the specified resource.
      *

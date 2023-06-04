@@ -192,9 +192,6 @@
 						<a class="nav-link" href="{{route('incidences.index')}}">Incidencias</a>
 					</li>
 					<li class="nav-item">
-						<a class="nav-link" href="#">Facturas</a>
-					</li>
-					<li class="nav-item">
 						<a class="nav-link" href="#">Chat</a>
 					</li>
 					</ul>

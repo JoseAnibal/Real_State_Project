@@ -1,6 +1,7 @@
 <?php
 
 use App\Http\Controllers\AuthController;
+use App\Http\Controllers\BillsController;
 use App\Http\Controllers\HomeController;
 use App\Http\Controllers\IncidencesController;
 use Illuminate\Support\Facades\Route;
@@ -53,6 +54,11 @@ Route::middleware(['auth'])->group(function () {
         
         //ROUTES FOR PROPERTIES
         Route::resource('properties',PropertiesController::class);
+
+        Route::get('/property/bills/{property}',[PropertiesController::class,'showbillsadmin'])->name('properties.bills');
+        Route::get('/property/bills/create/{property}',[PropertiesController::class,'createbillform'])->name('properties.createbillform');
+        Route::get('/property/bills/show/{property}',[PropertiesController::class,'showbilladmin'])->name('properties.showbill');
+        Route::post('/property/bills/create/{property}',[PropertiesController::class,'createbill'])->name('properties.createbill');
 
         //ROUTES FOR INCIDENCES
         Route::resource('incidences',IncidencesController::class);

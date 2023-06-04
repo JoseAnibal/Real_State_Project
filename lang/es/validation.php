@@ -197,7 +197,9 @@ return [
         'price'=>'precio',
         'coordinates'=>'coordenadas',
         'status'=>'estado',
-        'title'=>'título'
+        'title'=>'título',
+        'water'=>'agua',
+        'light'=>'luz'
     ],
 
 ];

@@ -2,6 +2,7 @@
 
 namespace App\Http\Controllers;
 
+use App\Models\Bill;
 use App\Models\Property;
 use App\Models\Image;
 use App\Models\GeneralFunction;
@@ -185,6 +186,78 @@ class PropertiesController extends Controller
 
         return view('incidences.showincidencesadmin',['incidences'=>$property_o->incidences,'status'=>$status]);
 
+    }
+
+    public function showbillsadmin($property){
+        $bills=DB::select("SELECT
+                                b.id,
+                                b.total,
+                                b.date,
+                                u.email
+                            FROM
+                                bills AS b
+                                INNER JOIN rentals AS r ON r.id = b.rental_id
+                                INNER JOIN properties AS p ON p.id = r.property_id
+                                INNER JOIN users AS u ON r.user_id = u.id 
+                                AND r.active = 1 
+                                AND p.id = ?
+                                ORDER BY b.date DESC;",[$property]);
+
+        return view('bills.index',['bills'=>$bills,'property'=>$property]);
+    }
+
+    public function createbillform($property){
+
+        $property_o=Property::find($property);
+
+        $idusersin=DB::select("SELECT
+                                u.email,
+                                r.id
+                            FROM
+                                users AS u
+                                INNER JOIN rentals AS r ON r.user_id = u.id
+                                INNER JOIN properties AS p ON r.property_id = p.id 
+                                AND r.active = 1
+                            WHERE
+                                p.id = ?;",[$property]);
+
+        $rentals=[];
+        foreach($idusersin as $obj){
+            $rentals[$obj->id]=$obj->email;
+        }
+        
+        return view('bills.create',['rentals'=>$rentals,'property'=>$property,'js'=>asset('js/Bills/createbill.js')]);
+    }
+
+    public function createbill(Request $request, $property){
+
+        $request->validate([
+            'water'=>'required| numeric | min:0',
+            'gas'=>'required| numeric | min:0',
+            'light'=>'required| numeric | min:0',
+            'internet'=>'required| numeric | min:0',
+            'extra'=>'required| numeric | min:0'
+        ]);
+
+        $bill=new Bill;
+        $bill->rental_id=$request->rental;
+        $bill->date=$request->date;
+        $bill->extra=$request->extra;
+        $bill->water=$request->water;
+        $bill->gas=$request->gas;
+        $bill->light=$request->light;
+        $bill->internet=$request->internet;
+        $bill->total=intval($request->extra)+intval($request->water)+intval($request->gas)+intval($request->light)+intval($request->internet);
+
+        $bill->save();
+
+        return redirect()->route('properties.bills',['property'=>$property])->with('success','Factura creada correctamente');
+
+    }
+
+    public function showbilladmin($bill){
+        $bill_o=Bill::find($bill);
+        return view('properties.showbill',['bill'=>$bill_o]);
     }
 
     public function propertyImages($property){

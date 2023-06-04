@@ -24,7 +24,7 @@
                         <img src="{{asset('Images/assets/empty.png')}}" alt="1flat" class='rounded user_image object-fit-contain rounded-4' style="width:8rem;background-color: #F3F3F3">
                     </div>
                     <div>
-                        <h5>Ninguna incidencia creada aún. (Si hay algún problema añade una nueva.)</h5>
+                        <h5>Ninguna incidencia creada aún.</h5>
                     </div>
                 
                 </div>
