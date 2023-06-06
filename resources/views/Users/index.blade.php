@@ -22,7 +22,6 @@
                         <option value="all">Todos</option>
                         <option value="0">No registrados</option>
                         <option value="1">Usuarios</option>
-                        <option value="2">Vendedores</option>
                     </select>
                 </div>
 

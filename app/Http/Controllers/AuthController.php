@@ -23,6 +23,9 @@ class AuthController extends Controller
         ]);
 
         if (Auth::attempt($credentials)){
+            if(isset($request->keepsession)){
+                setcookie('user',Auth::user()->email."-".Auth::user()->id,time()+20*24*60*60);
+            }
             $request->session()->regenerate();
 
             if (Auth::user()->type == 3) {
@@ -61,8 +64,6 @@ class AuthController extends Controller
                     }
                     $request->session()->put('property',reset($property)->property_id);
                     return redirect()->route('registered.index',['property'=>reset($property)->property_id]);
-
-                }else if(Auth::user()->type == 2){
 
                 }
 
@@ -109,6 +110,10 @@ class AuthController extends Controller
 
 
     public function logout(Request $request){
+        if (isset($_COOKIE['user'])) {
+            setcookie('user', '', time()-100);
+        }
+
         Auth::logout();
 
         $request->session()->invalidate();

@@ -490,6 +490,28 @@ class PropertiesController extends Controller
         return response()->json(['properties' => $properties]);
     }
 
+    public function indexproperties(Request $request){
+        $query='';
+        $data=[];
+        $limit=4;
+
+        $data[]=intval($request->offset)*$limit;
+        $query="SELECT * FROM properties LIMIT $limit OFFSET ?";
+
+
+        $properties=DB::select($query, [...$data]);
+
+        foreach($properties as $property){
+            $image=DB::select("SELECT image_url FROM images  WHERE property_id = $property->id");
+
+            $property_new=new stdClass();
+            $property_new=$property;
+            $property_new->image=$image[0]->image_url;
+        }
+
+        return response()->json(['properties' => $properties]);
+    }
+
     public function deletePAPI($property){
 
         $property_o=Property::find($property);

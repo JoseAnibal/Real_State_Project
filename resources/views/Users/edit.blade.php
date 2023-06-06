@@ -56,8 +56,6 @@
                     <option selected>Tipo de usuario</option>
                     <option value="0">No registrado</option>
                     <option value="1">Usuario</option>
-                    <option value="2">Vendedor</option>
-                    <option value="3">Admin</option>
                 </select>
             </div>
             <button class="btn btn-primary sendButton borderfade rounded-5 border-0 w-100">Editar</button>

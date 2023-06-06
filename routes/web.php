@@ -23,7 +23,7 @@ use App\Models\Rental;
 */
 
 Route::get('/', function () {
-    return view('app');
+    return redirect()->route('home');
 });
 
 Route::get('/users', function () {
@@ -45,6 +45,8 @@ Route::post('/login',[AuthController::class,'login'])->name('loginin');
 Route::post('/register',[AuthController::class,'registerUser']);
 Route::post('/logout',[AuthController::class,'logout'])->name('logout');
 Route::get('/register',[AuthController::class,'registerView'])->name('register');
+Route::get('/propertyshow/{property}',[HomeController::class,'showproperty'])->name('public.showproperty');
+Route::get('/propertiesrental',[HomeController::class,'rentalproperties'])->name('public.rentalproperties');
 
 //ROUTES FROM LOGGED USERS
 Route::middleware(['auth'])->group(function () {
@@ -73,15 +75,12 @@ Route::middleware(['auth'])->group(function () {
 
     });
 
-    Route::group(['middleware' => 'seller'], function () {
-        
-    });
-
     Route::group(['middleware' => 'registered'], function () {
         Route::get('/registered/{property}',[RegisteredController::class,'index'])->name('registered.index');
         Route::get('/showincidences/{property}',[RegisteredController::class,'showincidences'])->name('registered.showincidences');
         Route::get('/incidences/create/{property}',[RegisteredController::class,'createincidence'])->name('registered.createincidence');
         Route::post('/incidences/store',[RegisteredController::class,'storeincidence'])->name('registered.storeincidence');
+        Route::get('/bills/{user}',[RegisteredController::class,'seebills'])->name('registered.seebills');
     });
 
 });

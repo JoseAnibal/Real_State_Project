@@ -6,6 +6,8 @@ document.addEventListener("DOMContentLoaded", function() {
         const url=window.location.href;
         const idproperty=url.split("/")[4];
 
+        console.log(idproperty);
+
         const respuesta=await fetch('http://127.0.0.1:8000/api/get_coords/'+idproperty,{
                 method: 'GET'
         });

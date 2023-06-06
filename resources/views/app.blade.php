@@ -45,11 +45,12 @@
 	use Illuminate\Support\Facades\Artisan;
 		
 		# Run the Artisan command
-		Artisan::call("cache:clear");
+		// Artisan::call("cache:clear");
 		# If you need the output
-		$output = Artisan::output();
+		// $output = Artisan::output();
 
-		print_r($output);
+		// print_r($output);
+		print_r($_COOKIE);
 
 	?>
 
@@ -70,16 +71,13 @@
 				<div>
 				<ul class="navbar-nav">
 					<li class="nav-item">
-					<a class="nav-link" aria-current="page" href="{{route('home')}}">Inicio</a>
+						<a class="nav-link" aria-current="page" href="{{route('home')}}">Inicio</a>
 					</li>
 					<li class="nav-item">
-					<a class="nav-link" href="#">Alquiler</a>
+						<a class="nav-link" href="{{route('public.rentalproperties')}}">Buscador de propiedades</a>
 					</li>
 					<li class="nav-item">
-					<a class="nav-link" href="#">Compra</a>
-					</li>
-					<li class="nav-item">
-					<a class="nav-link" href="#">Quiénes somos</a>
+						<a class="nav-link" href="#">Quiénes somos</a>
 					</li>
 				</ul>
 				</div>
@@ -119,7 +117,7 @@
 										<a class="nav-link" href="{{route('registered.showincidences',['property'=>session()->get('property',false)])}}">Incidencias</a>
 									</li>
 									<li class="nav-item">
-										<a class="nav-link" href="#">Facturas</a>
+										<a class="nav-link" href="{{route('registered.seebills',['user'=>session()->get('user',false)])}}">Facturas</a>
 									</li>
 
 								@elseif (session()->get('type',0) == 2)
@@ -130,10 +128,7 @@
 
 								@else
 									<li class="nav-item">
-										<a class="nav-link" href="#">Alquiler</a>
-									</li>
-									<li class="nav-item">
-										<a class="nav-link" href="#">Compra</a>
+										<a class="nav-link" href="{{route('public.rentalproperties')}}">Buscador de propiedades</a>
 									</li>
 									<li class="nav-item">
 										<a class="nav-link" href="#">Quiénes somos</a>
@@ -179,21 +174,18 @@
 			<div class="collapse navbar-collapse justify-content-between" id="navbarNavDropdown">
 				<div>
 					<ul class="navbar-nav">
-					<li class="nav-item">
-						<a class="nav-link" aria-current="page" href="{{route('home')}}">Inicio</a>
-					</li>
-					<li class="nav-item">
-						<a class="nav-link" href="{{route('properties.index')}}">Propiedades</a>
-					</li>
-					<li class="nav-item">
-						<a class="nav-link" href="{{route('users.index')}}">Usuarios</a>
-					</li>
-					<li class="nav-item">
-						<a class="nav-link" href="{{route('incidences.index')}}">Incidencias</a>
-					</li>
-					<li class="nav-item">
-						<a class="nav-link" href="#">Chat</a>
-					</li>
+						<li class="nav-item">
+							<a class="nav-link" aria-current="page" href="{{route('home')}}">Inicio</a>
+						</li>
+						<li class="nav-item">
+							<a class="nav-link" href="{{route('properties.index')}}">Propiedades</a>
+						</li>
+						<li class="nav-item">
+							<a class="nav-link" href="{{route('users.index')}}">Usuarios</a>
+						</li>
+						<li class="nav-item">
+							<a class="nav-link" href="{{route('incidences.index')}}">Incidencias</a>
+						</li>
 					</ul>
 				</div>
 				<div class="dropdown col-2">

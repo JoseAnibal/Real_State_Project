@@ -3,19 +3,12 @@
 @section('content')
 
     <section class="container d-flex flex-column">
-        @if ($errors->any())
-            {!! implode('', $errors->all("<div class='alert alert-danger mt-3' role='alert'>:message</div>")) !!}
-        @endif
-        @if (session('success'))
-            <div class="alert alert-success" role="alert">{{session('success')}}</div>
-        @endif
         <section class="d-flex flex-column justify-content-center align-items-center bg-body-secondary rounded-4" id="imagesfield">
             <div id="carouselExample" class="carousel slide col-11">
                 <div class="carousel-inner">
                     @php
                         $first=true;
                     @endphp
-
                     @forelse ($property->images as $image)
                         @if ($first)
                             <div class="carousel-item active">
@@ -96,24 +89,26 @@
             <section class="col-12 col-md-4 d-flex flex-column align-items-center gap-3" id="aside-r">
                 <span href="#" class="d-flex text-centerbadge rounded-pill text-bg-primary justify-content-center px-5 py-3">{{$property->price}} €</span>
                 <div id="attrprop" class="row col-10 d-flex justify-content-center">
-                    <div class="d-flex flex-column col-4">
-                        <div class="d-flex col-12">
-                            <div class="col-6"><i class="fa-solid fa-bed fa-lg" style="color:#a8a8a8"></i></div>
-                            <div class="col-6">{{$property->rooms}}</div>
-                        </div>
-                        <div class="col-12 text-truncate">
-                            Habitaciones
-                        </div>
-                    </div>
-                    <div class="d-flex flex-column col-4">
-                        <div class="d-flex col-12">
-                            <div class="col-6"><i class="fa-solid fa-bath fa-lg" style="color:#a8a8a8"></i></div>
-                            <div class="col-6">{{$property->baths}}</div>
-                        </div>
-                        <div class="col-12 text-truncate">
-                            Baños
-                        </div>
-                    </div>
+                    @if (in_array($property->type,[0,1]))
+                            <div class="d-flex flex-column col-4">
+                                <div class="d-flex col-12">
+                                    <div class="col-6"><i class="fa-solid fa-bed fa-lg" style="color:#a8a8a8"></i></div>
+                                    <div class="col-6">{{$property->rooms}}</div>
+                                </div>
+                                <div class="col-12 text-truncate">
+                                    Habitaciones
+                                </div>
+                            </div>
+                            <div class="d-flex flex-column col-4">
+                                <div class="d-flex col-12">
+                                    <div class="col-6"><i class="fa-solid fa-bath fa-lg" style="color:#a8a8a8"></i></div>
+                                    <div class="col-6">{{$property->baths}}</div>
+                                </div>
+                                <div class="col-12 text-truncate">
+                                    Baños
+                                </div>
+                            </div>
+                        @endif
                     <div class="d-flex flex-column col-4">
                         <div class="d-flex col-12">
                             <div class="col-6"><i class="fa-solid fa-ruler fa-lg" style="color:#a8a8a8"></i></div>
@@ -122,26 +117,6 @@
                         <div class="col-12 text-truncate">
                             M2
                         </div>
-                    </div>
-                </div>
-
-                <div class="col-11 mt-2">
-                    <h5>Tus compañeros</h5>
-                    <div class="d-flex flex-column justify-content-center align-items-center gap-2">
-                    @forelse ($users as $user)
-                        
-                        <div class="col-10 border rounded-4 d-flex justify-content-center">
-                            <div class="col-6 d-flex imageusernav rounded-circle">
-                                <img src="{{asset("$user->image")}}" alt="" class="object-fit-cover rounded-circle">
-                            </div>
-                            <div class="col-6 d-flex align-items-center justify-content-start ms-3 py-2">
-                                <p class="m-0 text-truncate">{{$user->name}}</p>
-                            </div>
-                        </div>
-
-                    @empty
-                        
-                    @endforelse
                     </div>
                 </div>
             </section>

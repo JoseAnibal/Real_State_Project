@@ -1,5 +1,6 @@
 <?php
 
+use App\Http\Controllers\HomeController;
 use App\Http\Controllers\IncidencesController;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Route;
@@ -35,6 +36,10 @@ Route::post('get_users',[UsersController::class,'getUsers']);
 Route::post('delete_user/{user}',[UsersController::class,'deleteAPI']);
 
 Route::post('get_properties',[PropertiesController::class,'getProperties']);
+
+Route::post('get_propertiesrental',[HomeController::class,'getPropertiesRental']);
+
+Route::post('index_properties',[PropertiesController::class,'indexproperties']);
 
 Route::post('delete_property/{property}',[PropertiesController::class,'deletePAPI']);
 

@@ -123,6 +123,28 @@ class RegisteredController extends Controller
 
     }
 
+    public function seebills($user){
+
+        $billsuser=DB::select("SELECT
+                                    b.*
+                                FROM
+                                    bills AS b
+                                    INNER JOIN rentals AS r ON r.id = b.rental_id
+                                    INNER JOIN properties AS p ON p.id = r.property_id
+                                    INNER JOIN users AS u ON r.user_id = u.id 
+                                    AND r.active = 1 
+                                    AND p.id = 1
+                                    AND u.id = ?;",[$user]);
+        
+        if(session()->get('user') != $user){
+            return back()->withErrors([
+                'prohibido' => 'Acceso denegado',
+            ]);
+        }
+
+        return view('users.seebillsuser',['billsuser'=>$billsuser]);
+    }
+
 
     /**
      * Store a newly created resource in storage.

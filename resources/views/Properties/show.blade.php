@@ -88,25 +88,27 @@
             </section>
             <section class="col-12 col-md-4 d-flex flex-column align-items-center gap-3" id="aside-r">
                 <span href="#" class="d-flex text-centerbadge rounded-pill text-bg-primary justify-content-center px-5 py-3">{{$property->price}} €</span>
-                <div id="attrprop" class="row col-10">
-                    <div class="d-flex flex-column col-4">
-                        <div class="d-flex col-12">
-                            <div class="col-6"><i class="fa-solid fa-bed fa-lg" style="color:#a8a8a8"></i></div>
-                            <div class="col-6">{{$property->rooms}}</div>
-                        </div>
-                        <div class="col-12 text-truncate">
-                            Habitaciones
-                        </div>
-                    </div>
-                    <div class="d-flex flex-column col-4">
-                        <div class="d-flex col-12">
-                            <div class="col-6"><i class="fa-solid fa-bath fa-lg" style="color:#a8a8a8"></i></div>
-                            <div class="col-6">{{$property->baths}}</div>
-                        </div>
-                        <div class="col-12 text-truncate">
-                            Baños
-                        </div>
-                    </div>
+                <div id="attrprop" class="row col-10 d-flex justify-content-center">
+                    @if (in_array($property->type,[0,1]))
+                            <div class="d-flex flex-column col-4">
+                                <div class="d-flex col-12">
+                                    <div class="col-6"><i class="fa-solid fa-bed fa-lg" style="color:#a8a8a8"></i></div>
+                                    <div class="col-6">{{$property->rooms}}</div>
+                                </div>
+                                <div class="col-12 text-truncate">
+                                    Habitaciones
+                                </div>
+                            </div>
+                            <div class="d-flex flex-column col-4">
+                                <div class="d-flex col-12">
+                                    <div class="col-6"><i class="fa-solid fa-bath fa-lg" style="color:#a8a8a8"></i></div>
+                                    <div class="col-6">{{$property->baths}}</div>
+                                </div>
+                                <div class="col-12 text-truncate">
+                                    Baños
+                                </div>
+                            </div>
+                        @endif
                     <div class="d-flex flex-column col-4">
                         <div class="d-flex col-12">
                             <div class="col-6"><i class="fa-solid fa-ruler fa-lg" style="color:#a8a8a8"></i></div>

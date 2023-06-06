@@ -35,7 +35,16 @@
                     </div>
                 </div>
             @empty
-                Ningun usuario añadido
+                <div class='d-flex col-10 rounded-4 bg-graylight flex-column h-100 justify-content-center align-items-center h-100 w-100'>
+                
+                    <div class="p-3">
+                        <img src="{{asset('Images/assets/empty.png')}}" alt="1flat" class='rounded user_image object-fit-contain rounded-4' style="width:8rem;background-color: #F3F3F3">
+                    </div>
+                    <div>
+                        <h5>Ningun usuario añadido aún.</h5>
+                    </div>
+                
+                </div>
             @endforelse
         </div>
     </section>
