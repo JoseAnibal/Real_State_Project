@@ -30,8 +30,13 @@ class UsersController extends Controller
             return redirect(route("users.index"));
         }
 
+        $type=[
+            0=>'No registrado',
+            1=>'Usuario'
+        ];
+
         //PASAR EL JAVASCRIPT PARA EL USUARIO
-        return view('users.edit',['user'=>$user_o, 'js'=>asset("js/Users/create_user.js")]);
+        return view('users.edit',['user'=>$user_o,'type'=>$type ,'js'=>asset("js/Users/create_user.js")]);
     }
 
     public function store(Request $request){
@@ -66,7 +71,7 @@ class UsersController extends Controller
         $request->validate([
             'email'=>'unique:users,email,'.$user.'| max:100 | email:rfc,dns',
             'name'=>'string',
-            'phone'=>'nullable| numeric ',
+            'phone'=>'required | numeric ',
             'type'=>'required | numeric',
             'password'=>'nullable | min:4'
         ]);

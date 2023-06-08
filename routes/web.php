@@ -23,7 +23,7 @@ use App\Models\Rental;
 */
 
 Route::get('/', function () {
-    return redirect()->route('home');
+    return redirect()->route('landing.home');
 });
 
 Route::get('/users', function () {
@@ -45,8 +45,11 @@ Route::post('/login',[AuthController::class,'login'])->name('loginin');
 Route::post('/register',[AuthController::class,'registerUser']);
 Route::post('/logout',[AuthController::class,'logout'])->name('logout');
 Route::get('/register',[AuthController::class,'registerView'])->name('register');
+
 Route::get('/propertyshow/{property}',[HomeController::class,'showproperty'])->name('public.showproperty');
 Route::get('/propertiesrental',[HomeController::class,'rentalproperties'])->name('public.rentalproperties');
+Route::get('/reghome',[HomeController::class,'landing'])->name('landing.home');
+Route::get('/whoarewe',[HomeController::class,'whoarewe'])->name('public.whoarewe');
 
 //ROUTES FROM LOGGED USERS
 Route::middleware(['auth'])->group(function () {

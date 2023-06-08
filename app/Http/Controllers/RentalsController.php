@@ -95,7 +95,6 @@ class RentalsController extends Controller
         // $rental_o=Rental::find($rental);
         // $property=$rental_o->property_id;
         // $rental_o->delete();
-        // //TODO:REDRECT WITH MESSAGE AND SEE DELETE ERRROR (SHOW MESSAGE)
         // return redirect()->route('properties.userlist',['property'=>$property]);
     }
 }

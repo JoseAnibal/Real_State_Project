@@ -63,8 +63,9 @@
             <div class="mb-3 forjs estadofield">
                 <label for="status" class="form-label">Estado</label>
                 <select class="form-select" aria-label="Default select example" name='status'>
-                    <option value="0">Alquilable</option>
-                    <option value="1">En venta</option>
+                    <option value="0">Disponible</option>
+                    <option value="1">Lleno</option>
+                    <option value="2">No disponible</option>
                 </select>
             </div>
         </form>

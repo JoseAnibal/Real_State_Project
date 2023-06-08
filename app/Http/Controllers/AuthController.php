@@ -3,6 +3,7 @@
 namespace App\Http\Controllers;
 
 use App\Models\User;
+use Illuminate\Contracts\Session\Session;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\DB;
@@ -33,7 +34,7 @@ class AuthController extends Controller
                 $request->session()->put('admin', true);
                 return redirect()->route('properties.index');
 
-            }else if(Auth::user()){
+            }else if(Auth::user()->type == 1){
 
                 $user_o=Auth::user();
 
@@ -44,28 +45,34 @@ class AuthController extends Controller
                 $request->session()->put('type', $user_o->type);
                 $request->session()->put('image', $user_o->image);
 
-                if(Auth::user()->type == 1){
+                $property=DB::select("SELECT
+                                    r.property_id 
+                                FROM
+                                    users AS u
+                                    INNER JOIN rentals AS r ON r.user_id = u.id 
+                                WHERE
+                                    u.id = ? 
+                                    AND r.active = 1;", [$user_o->id]);
 
-                    $property=DB::select("SELECT
-                                        r.property_id 
-                                    FROM
-                                        users AS u
-                                        INNER JOIN rentals AS r ON r.user_id = u.id 
-                                    WHERE
-                                        u.id = ? 
-                                        AND r.active = 1;", [$user_o->id]);
-
-                    if(empty($property)){
-
-                        return back()->withErrors([
-                            'error' => 'Tu alquiler ya ha terminado.',
-                        ]);
-
+                if(empty($property)){
+                    if (isset($_COOKIE['user'])) {
+                        setcookie('user', '', time()-100);
                     }
-                    $request->session()->put('property',reset($property)->property_id);
-                    return redirect()->route('registered.index',['property'=>reset($property)->property_id]);
+                    $sessionManager = app(Session::class);
+                    $sessionManager->flush();
+                    $sessionManager->regenerate();
 
+                    Auth::logout();
+
+                    return back()->withErrors([
+                        'error' => 'Tu alquiler ya ha terminado.',
+                    ]);
+
+                }else{
+                    $request->session()->put('property',reset($property)->property_id);
                 }
+                
+                return redirect()->route('registered.index',['property'=>reset($property)->property_id]);
 
             }
             // dd($request->session()->get('admin', false));

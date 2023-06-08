@@ -55,13 +55,11 @@
 	?>
 
   	@if (!Auth::check())
-
-		NO SESSION
 		
 		<nav class="navbar navbar-expand-lg bg-body-tertiary">
 			<div class="container-fluid gap-3">
-			<div class="logoD d-flex">
-				<img src="{{asset('Images/assets/logo.png')}}" alt="" class="object-fit-cover w-100 rounded-4">
+			<div>
+				<a href="{{route('landing.home')}}" class="logoD d-flex"><img src="{{asset('Images/assets/logo.png')}}" alt="" class="object-fit-cover w-100 rounded-4"></a>
 			</div>
 			
 			<button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarNavDropdown" aria-controls="navbarNavDropdown" aria-expanded="false" aria-label="Toggle navigation">
@@ -77,7 +75,7 @@
 						<a class="nav-link" href="{{route('public.rentalproperties')}}">Buscador de propiedades</a>
 					</li>
 					<li class="nav-item">
-						<a class="nav-link" href="#">Quiénes somos</a>
+						<a class="nav-link" href="{{route('public.whoarewe')}}">Quiénes somos</a>
 					</li>
 				</ul>
 				</div>
@@ -95,8 +93,8 @@
 		@if (!session()->get('admin',false))
 			<nav class="navbar navbar-expand-lg bg-body-tertiary">
 				<div class="container-fluid gap-3">
-					<div class="logoD d-flex">
-					<img src="{{asset('Images/assets/logo.png')}}" alt="" class="object-fit-cover w-100 rounded-4">
+					<div>
+						<a href="{{route('landing.home')}}" class="logoD d-flex"><img src="{{asset('Images/assets/logo.png')}}" alt="" class="object-fit-cover w-100 rounded-4"></a>
 					</div>
 					
 					<button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarNavDropdown" aria-controls="navbarNavDropdown" aria-expanded="false" aria-label="Toggle navigation">
@@ -111,7 +109,7 @@
 								@if (session()->get('type',0) == 1)
 
 									<li class="nav-item">
-										<a class="nav-link" href="{{route('registered.index',['property'=>session()->get('property',false)])}}">Mi piso</a>
+										<a class="nav-link" href="{{route('registered.index',['property'=>session()->get('property',false)])}}">Mi propiedad</a>
 									</li>
 									<li class="nav-item">
 										<a class="nav-link" href="{{route('registered.showincidences',['property'=>session()->get('property',false)])}}">Incidencias</a>
@@ -119,13 +117,6 @@
 									<li class="nav-item">
 										<a class="nav-link" href="{{route('registered.seebills',['user'=>session()->get('user',false)])}}">Facturas</a>
 									</li>
-
-								@elseif (session()->get('type',0) == 2)
-
-									<li class="nav-item">
-										<a class="nav-link" href="#">NOSE</a>
-									</li>
-
 								@else
 									<li class="nav-item">
 										<a class="nav-link" href="{{route('public.rentalproperties')}}">Buscador de propiedades</a>
@@ -164,8 +155,8 @@
 		
 		<nav class="navbar navbar-expand-lg bg-body-tertiary">
 		<div class="container-fluid gap-3">
-			<div class="logoD d-flex">
-			<img src="{{asset('Images/assets/logo.png')}}" alt="" class="object-fit-cover w-100 rounded-4">
+			<div>
+				<a href="{{route('landing.home')}}" class="logoD d-flex"><img src="{{asset('Images/assets/logo.png')}}" alt="" class="object-fit-cover w-100 rounded-4"></a>
 			</div>
 			
 			<button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarNavDropdown" aria-controls="navbarNavDropdown" aria-expanded="false" aria-label="Toggle navigation">

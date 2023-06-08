@@ -171,7 +171,11 @@ class PropertiesController extends Controller
             return redirect(route("properties.index"));
         }
 
-        return view('properties.edit',['property'=>$property_o, 'js'=>asset("js/Properties/update_property.js")]);
+        $status=[0=>'Disponible',
+                1=>'Lleno',
+                2=>'No disponible'];
+
+        return view('properties.edit',['property'=>$property_o,'statusarr'=>$status, 'js'=>asset("js/Properties/update_property.js")]);
     }
 
     public function showincidencesadmin($property){
@@ -332,16 +336,6 @@ class PropertiesController extends Controller
     public function updateApi(Request $request, $property)
     {
         //
-        // $request->validate([
-        //     'title'=>'required|unique:properties,title,'.$property,
-        //     'description'=>'required',
-        //     'adress'=>'required',
-        //     'm2'=>'required|numeric|min:1',
-        //     'price'=>'required|numeric|min:1',
-        //     'coordinates'=>'required',
-        //     'status'=>'required|numeric'
-        // ]);
-
         $property_o=Property::find($property);
 
         $rules = [
@@ -496,7 +490,7 @@ class PropertiesController extends Controller
         $limit=4;
 
         $data[]=intval($request->offset)*$limit;
-        $query="SELECT * FROM properties LIMIT $limit OFFSET ?";
+        $query="SELECT * FROM properties AND status = 0 LIMIT $limit OFFSET ?";
 
 
         $properties=DB::select($query, [...$data]);

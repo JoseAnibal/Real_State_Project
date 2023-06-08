@@ -55,7 +55,7 @@
         </div>
 
         <section class="col-12">
-            <h5 class="fw-bold mt-3 border-bottom">Échale un vistao a los mejores pisos de Granada</h5>
+            <h5 class="fw-bold mt-3">Échale un vistao a los mejores pisos de Granada</h5>
             <section class=" d-flex container mx-auto flex-wrap row justify-content-center px-0" id="propertiescontainer">
                 
             </section>

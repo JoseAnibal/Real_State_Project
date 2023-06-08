@@ -53,9 +53,15 @@
             <div class="mb-3 forjs estadofield">
                 <label for="type" class="form-label">Tipo</label>
                 <select class="form-select" aria-label="Default select example" name='type'>
-                    <option selected>Tipo de usuario</option>
-                    <option value="0">No registrado</option>
-                    <option value="1">Usuario</option>
+                    
+                    @foreach ($type as $key=>$value)
+                        @if ($key == $user->type)
+                            <option value="{{$key}}" selected>{{$value}}</option>
+                        @else
+                            <option value="{{$key}}">{{$value}}</option>
+                        @endif
+                    @endforeach
+                    
                 </select>
             </div>
             <button class="btn btn-primary sendButton borderfade rounded-5 border-0 w-100">Editar</button>

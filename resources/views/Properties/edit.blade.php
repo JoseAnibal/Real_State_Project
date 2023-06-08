@@ -68,8 +68,14 @@
             <div class="mb-3 forjs estadofield">
                 <label for="status" class="form-label">Estado</label>
                 <select class="form-select" aria-label="Default select example" name='status'>
-                    <option value="0">Alquilable</option>
-                    <option value="1">En venta</option>
+                    @foreach ($statusarr as $key=>$value)
+                    @if ($key == $property->status)
+                        <option value="{{$key}}" selected>{{$value}}</option>
+                    @else
+                        <option value="{{$key}}">{{$value}}</option>
+                    @endif
+                        
+                    @endforeach
                 </select>
             </div>
         </form>
